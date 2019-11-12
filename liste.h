@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <locale.h>
+#include "Structures.h"
 
 
 typedef struct SingleLinkedListElem {
