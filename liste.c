@@ -4,3 +4,4 @@
 #include <locale.h>
 #include "liste.h"
 
+srdtfy
