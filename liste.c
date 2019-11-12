@@ -3,10 +3,7 @@
 #include <time.h>
 #include <locale.h>
 #include "liste.h"
-
-
-<<<<<<< Updated upstream
-=======
+#include "Structures.h"
 
 // crée une nouvelle liste chainée unilataire vide et renvoie un pointeur sur cette liste
 LinkedList* NewLinkedList() {
@@ -19,12 +16,12 @@ LinkedList* NewLinkedList() {
 	}
 	return tmp;
 }
-// crée un nouveau maillon qui contient la personne passée en paramètre
-SingleLinkedListElem* NewLinkedListElement(Pos pers) {
+// crée un nouveau maillon qui contient l info passée en paramètre
+SingleLinkedListElem* NewLinkedListElement(ElementListe info) {
 	SingleLinkedListElem* tmp;
 	tmp = (SingleLinkedListElem*)malloc(sizeof(SingleLinkedListElem));
 	if (tmp != NULL) {
-		tmp->pers = pers;
+		tmp->info = info;
 		tmp->next = NULL;
 	}
 	return(tmp);
@@ -46,7 +43,7 @@ SingleLinkedListElem* GetElementAt(LinkedList* Liste, int i) {
 
 // Ajoute une nouvelle personne dans la liste chaînée en ième position
 // Cette fonction fait appel à la fonction NewLinkedListElement(Enregistrement pers) pour créer un maillon
-int InsertElementAt(LinkedList* Liste, int i, Pos pers) {
+int InsertElementAt(LinkedList* Liste, int i, ElementListe info) {
 	SingleLinkedListElem* CurrentElement, * NewElement;
 	if (Liste == NULL) return(0);
 	// recherche de l'élément qui se trouve déjà en position i
@@ -54,52 +51,15 @@ int InsertElementAt(LinkedList* Liste, int i, Pos pers) {
 	// s'il y en a un
 	if (CurrentElement != NULL) {
 		// on insère un nouvel élément
-		NewElement = NewLinkedListElement(pers);
+		NewElement = NewLinkedListElement(info);
 		// son suivant est alors l'élément courant
 		NewElement->next = CurrentElement;
 
-		if (i == 0) {
-			// si l'insertion est en tête
-			// le nouvel élément devient la tête
-			Liste->head = NewElement;
-		}
-		else {
-			// sinon il faut rétablir le chainage depuis l'élément précédent
-			CurrentElement = GetElementAt(Liste, i - 1);
-			// le sucesseur du précédent devient le nouvel élément
-			CurrentElement->next = NewElement;
-		}
-		Liste->size++;
-		return(1);
-	}
-	else {
-		if (Liste->size == 0) { // insertion en tête de l'unique élément
-			NewElement = NewLinkedListElement(pers);
-			if (NewElement != NULL) {
-				Liste->head = NewElement;
-				Liste->size = 1;
-				Liste->tail = NewElement;
-				return(1);
-			}
-			else {
-				return(0);
-			}
-		}
-		if (Liste->size <= i) { // insertion en queue
-			NewElement = NewLinkedListElement(pers);
-			if (NewElement != NULL) {
-				Liste->tail->next = NewElement;
-				Liste->tail = NewElement;
-				Liste->size += 1;
-				return(1);
-			}
-			else {
-				return(0);
-			}
-		}
-	}
-	return(0);
-}
+
+typedef struct SingleLinkedListElem {
+	Pos pers;
+	struct SingleLinkedListElem* next;
+} SingleLinkedListElem;
 
 int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
 	if (list == NULL) return(0); // La liste n'existe pas
@@ -158,5 +118,3 @@ int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
 	}
 }
 
-
->>>>>>> Stashed changes
