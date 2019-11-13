@@ -28,11 +28,9 @@ SingleLinkedListElem* GetElementAt(LinkedList* liste, int i);
 
 // Ajoute une nouvelle personne dans la liste chaînée en ième position
 // Cette fonction fait appel à la fonction NewLinkedListElement(Enregistrement pers) pour créer un maillon
-
 int InsertElementAt(LinkedList* liste, int i, ElementListe info);
 
 // Suppression et destruction d'un élément de liste chainée
 int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* Elem);
 
-//parcourire la liste chainer
-int BrowseLinkedList(LinkedList* list);
+
