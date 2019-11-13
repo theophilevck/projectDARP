@@ -7,30 +7,30 @@
 #include "check.h"
 
 
-int CheckCapacity(Voiture car){
-    int capaciter=0;
-    int size=car.Route->size;
-    SingleLinkedListElem* CurrentElement;
 
-    for (int i=0,i<size;i++ ){
-        CurrentElement=GetElementAt(car.Route,i);
-        if (CurrentElement->info.isDeparture==1){
-            capaciter=capaciter + CurrentElement->info.order.nbrpersonne;
-        }
-        else{
-            capaciter=capaciter - CurrentElement->info.order.nbrpersonne;
-        }
-        if (car.Cn<capaciter){
-            return(0);//capaciter depasser
-        }
-    }
-    return(1);//capaciter non depacer 
-}
+//int CheckCapacity(Voiture car) {
+//	int capaciter = 0;
+//	int size = car.Route->size;
+//	SingleLinkedListElem* CurrentElement;
+//
+//	for (int i = 0, i < size; i++) {
+//		CurrentElement = GetElementAt(car.Route, i);
+//		if (CurrentElement->info.isDeparture == 1) {
+//			capaciter = capaciter + CurrentElement->info.order.nbrpersonne;
+//		}
+//		else {
+//			capaciter = capaciter - CurrentElement->info.order.nbrpersonne;
+//		}
+//		if (car.Cn < capaciter) {
+//			return(0);//capaciter depasser
+//		}
+//	}
+//	return(1);//capaciter non depacer 
+//}
 
 int CheckCapacity(Voiture car){
     int capaciter=0;
     int i=0;
-    int size=car.Route->size;
     SingleLinkedListElem* CurrentElement;
     CurrentElement=GetElementAt(car.Route,i);
     while (CurrentElement!=car.Route.tail)
@@ -53,10 +53,22 @@ int CheckCapacity(Voiture car){
     return(1);//capaciter non depacer 
 }
 
-    
-
-
-
-
-
-}
+int CheckDeparturBeforeArival(LinkedList route,SingleLinkedListElem* arret){
+    if(arret->info.isDeparture==1){
+        return(0);//if the element is a departure no need to call the function
+    }
+    else{
+    int i=0;
+    SingleLinkedListElem* CurrentElement;
+    CurrentElement=GetElementAt(car.Route,i);
+     while (CurrentElement!=arret)
+    {
+        if((CurrentElement->info.order.ID==arret->info.order.ID)&&(CurrentElement->info.isDeparture!=arret->info.isDeparture)){
+            return(1);//the departure of client is before the arival 
+        }
+        i++;
+        CurrentElement=GetElementAt(car.Route,i);
+    }
+    return(0);
+    }
+}    
