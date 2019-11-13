@@ -4,6 +4,11 @@
 #include <locale.h>
 #include "liste.h"
 #include "Structures.h"
+#include <math.h>
+#define TAILLE_MAX 10000
+
+
+
 
 
 
@@ -12,32 +17,27 @@ int main(){
 
 // le taxi part de l'entrepot donc la première valeur de la liste c'est la position de l'entrepot
 
-LinkedList* chemin;
-chemin = NewLinkedList();
-
-Pos position;
-position.X=0;
-position.Y=0;
-
-NewLinkedListElement(position);
+Pos entrepot;
+entrepot.X =0;
+entrepot.Y=0;
 
 Client listclient[8];
 Client client1;
-listclient.append(client1);
+listclient[0]=client1;
 Client client2;
-listclient.append(client2);
+listclient[1]=client2;
 Client client3;
-listclient.append(client3);
+listclient[2]=client3;
 Client client4;
-listclient.append(client4);
+listclient[3]=client4;
 Client client5;
-listclient.append(client5);
+listclient[4]=client5;
 Client client6;
-listclient.append(client6);
+listclient[5]=client6;
 Client client7;
-listclient.append(client7);
+listclient[6]=client7;
 Client client8;
-listclient.append(client8);
+listclient[7]=client8;
 
 
 // client1 initialisation
@@ -305,14 +305,31 @@ listclient.append(client8);
 
 
 
+// matrice des distances:
+
+Pos A[17];
+A[0]=entrepot;
+for (int k=0; k<8 ; k++){
+    A[k]=listclient[k].depart;
+
+}
+for (int k=8; k<17 ; k++){
+    A[k]=listclient[k].arrivee;
+}
+float Matrice_des_distances[17][17];
+
+for (int i=0 ; i<17 ; i++){
+    for (int j=0 ; j<17 ; j++){
+        Matrice_des_distances[i][j]= sqrt( pow((A[j].X -A[i].X),2) + pow((A[j].Y -A[i].Y),2))
+        printf( "%d", Matrice_des_distances[i][j]);
+
+    }
+}
+
+
     //ça on le garde pour nous:
 
-    listclient[0].priseencharge.heure = ;
-    listclient[0].priseencharge.minute = ;
 
-
-    listclient[0].depot.heure=;
-    listclient[0].depot.minute=;
 
 
 
