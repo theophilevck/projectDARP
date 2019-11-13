@@ -26,8 +26,6 @@ typedef struct Client
 	Pos arrivee;
 	Time intevalledepart[2];
 	Time intervallearrivee[2];
-	Time priseencharge;
-	Time depot;
 	Time dureemax;
 }Client;
 
@@ -44,7 +42,9 @@ typedef struct Voiture {
 
 typedef struct ElementListe {
 	bool isDeparture;// departure or arival
-	Client order
+	Client order;
+	Time priseencharge;
+	Time depot;
 }ElementListe;
 
 typedef struct Depot {
