@@ -39,10 +39,11 @@ typedef struct Voiture {
 	Time Edepart;
 	Time Earrivee;
 	Time dtravaille;
+	LinkedList Route;
 }Voiture;
 
 typedef struct ElementListe {
-	bool isDeparture;
+	bool isDeparture;// departure or arival
 	Client order
 }ElementListe;
 

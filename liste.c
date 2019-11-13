@@ -41,19 +41,63 @@ SingleLinkedListElem* GetElementAt(LinkedList* Liste, int i) {
 	return(Element);
 }
 
-// Ajoute une nouvelle info dans la liste chaînée en ième position
+// Ajoute une nouvelle personne dans la liste chaînée en ième position
 // Cette fonction fait appel à la fonction NewLinkedListElement(Enregistrement pers) pour créer un maillon
-int InsertElementAt(LinkedList* Liste, int i, ElementListe info) {
-	SingleLinkedListElem* CurrentElement, * NewElement;
+int InsertElementAt(LinkedList *Liste, int i, Enregistrement pers) {
+	SingleLinkedListElem *CurrentElement, *NewElement;
 	if (Liste == NULL) return(0);
 	// recherche de l'élément qui se trouve déjà en position i
 	CurrentElement = GetElementAt(Liste, i);
 	// s'il y en a un
 	if (CurrentElement != NULL) {
 		// on insère un nouvel élément
-		NewElement = NewLinkedListElement(info);
+		NewElement = NewLinkedListElement(pers);
 		// son suivant est alors l'élément courant
 		NewElement->next = CurrentElement;
+
+		if (i == 0) {
+			// si l'insertion est en tête
+			// le nouvel élément devient la tête
+			Liste->head = NewElement;
+		}
+		else {
+			// sinon il faut rétablir le chainage depuis l'élément précédent
+			CurrentElement = GetElementAt(Liste, i - 1);
+			// le sucesseur du précédent devient le nouvel élément
+			CurrentElement->next = NewElement;
+		}
+		Liste->size++;
+		return(1);
+	}
+	else {
+		if (Liste->size == 0) { // insertion en tête de l'unique élément
+			NewElement = NewLinkedListElement(pers);
+			if (NewElement != NULL) {
+				Liste->head = NewElement;
+				Liste->size = 1;
+				Liste->tail = NewElement;
+				return(1);
+			}
+			else {
+				return(0);
+			}
+		}
+		if (Liste->size <= i) { // insertion en queue
+			NewElement = NewLinkedListElement(pers);
+			if (NewElement != NULL) {
+				Liste->tail->next = NewElement;
+				Liste->tail = NewElement;
+				Liste->size += 1;
+				return(1);
+			}
+			else {
+				return(0);
+			}
+		}
+	}
+	return(0);
+}
+
 
 
 int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
@@ -113,24 +157,6 @@ int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
 	}
 }
 
-int BrowseLinkedList(LinkedList* list);{
-    int listSize;
-    SingleLinkedListElem* courant = NULL;
-    if (list == NULL) return(0); // La liste n'existe pas
-	if ((list->head == NULL) || (list->tail == NULL)) return(0); // liste vide ou anomalie
-	if ((list->head == list->tail) && (list->size != 1)) return(0); // anomalie
-	if ((list->size == 0) || (item == NULL)) return(0); // pas d'élément dans la liste ou item invalide
-    courant=list->head;
-    listSize=list->size;
 
-    
-    
-    
-
-
-
-
-
-}
 
 
