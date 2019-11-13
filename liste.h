@@ -33,3 +33,6 @@ int InsertElementAt(LinkedList* liste, int i, ElementListe info);
 
 // Suppression et destruction d'un élément de liste chainée
 int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* Elem);
+
+//parcourire la liste chainer
+int BrowseLinkedList(LinkedList* list);

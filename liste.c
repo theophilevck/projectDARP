@@ -41,7 +41,7 @@ SingleLinkedListElem* GetElementAt(LinkedList* Liste, int i) {
 	return(Element);
 }
 
-// Ajoute une nouvelle personne dans la liste chaînée en ième position
+// Ajoute une nouvelle info dans la liste chaînée en ième position
 // Cette fonction fait appel à la fonction NewLinkedListElement(Enregistrement pers) pour créer un maillon
 int InsertElementAt(LinkedList* Liste, int i, ElementListe info) {
 	SingleLinkedListElem* CurrentElement, * NewElement;
@@ -55,11 +55,6 @@ int InsertElementAt(LinkedList* Liste, int i, ElementListe info) {
 		// son suivant est alors l'élément courant
 		NewElement->next = CurrentElement;
 
-
-typedef struct SingleLinkedListElem {
-	Pos pers;
-	struct SingleLinkedListElem* next;
-} SingleLinkedListElem;
 
 int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
 	if (list == NULL) return(0); // La liste n'existe pas
@@ -117,4 +112,25 @@ int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
 		return(1);
 	}
 }
+
+int BrowseLinkedList(LinkedList* list);{
+    int listSize;
+    SingleLinkedListElem* courant = NULL;
+    if (list == NULL) return(0); // La liste n'existe pas
+	if ((list->head == NULL) || (list->tail == NULL)) return(0); // liste vide ou anomalie
+	if ((list->head == list->tail) && (list->size != 1)) return(0); // anomalie
+	if ((list->size == 0) || (item == NULL)) return(0); // pas d'élément dans la liste ou item invalide
+    courant=list->head;
+    listSize=list->size;
+
+    
+    
+    
+
+
+
+
+
+}
+
 
