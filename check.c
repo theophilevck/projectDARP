@@ -81,8 +81,8 @@ int CheckDeparturTime(LinkedList route){
     CurrentElement=GetElementAt(route,i);
     while (CurrentElement!=route.tail)
     {
-        timeMax=CurrentElement->info.order.intervallearrivee[1];
-        timeMin=CurrentElement->info.order.intervallearrivee[0];
+        timeMax=CurrentElement->info.order.intevalledepart[1];
+        timeMin=CurrentElement->info.order.intevalledepart[0];
 
         if(!(CurrentElement->info.priseencharge>timeMin)&&(CurrentElement->info.priseencharge<timeMax)){
             return(0);
@@ -91,6 +91,36 @@ int CheckDeparturTime(LinkedList route){
         CurrentElement=GetElementAt(route,i);
     }
     return(1);
+}
 
+int CheckArivalTime(LinkedList route){
+    int i=0;
+    Time timeMax;
+    Time timeMin;
+    SingleLinkedListElem* CurrentElement;
+    CurrentElement=GetElementAt(route,i);
+    while (CurrentElement!=route.tail)
+    {
+        timeMax=CurrentElement->info.order.intervallearrivee[1];
+        timeMin=CurrentElement->info.order.intervallearrivee[0];
 
+        if(!(CurrentElement->info.depot>timeMin)&&(CurrentElement->info.priseencharge<timeMax)){
+            return(0);
+        }
+        i++;
+        CurrentElement=GetElementAt(route,i);
+    }
+    return(1);
+}
+
+int CheckWorckTime(Voiture car){
+    Time tempsCourse;
+    tempsCourse=car.Earrivee-car.Edepart ;
+    if(tempsCourse>car.dtravaille){
+        return(0);
+    }
+    else
+    {
+        return(1);
+    }
 }

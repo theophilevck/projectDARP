@@ -13,3 +13,7 @@ int CheckDeparturBeforeArival(LinkedList route,SingleLinkedListElem* arret);
 
 //check if temp depos is in the time window
 int CheckDeparturTime(LinkedList route);
+
+int CheckArivalTime(LinkedList route);
+
+int CheckWorckTime(LinkedList route);
