@@ -60,15 +60,37 @@ int CheckDeparturBeforeArival(LinkedList route,SingleLinkedListElem* arret){
     else{
     int i=0;
     SingleLinkedListElem* CurrentElement;
-    CurrentElement=GetElementAt(car.Route,i);
+    CurrentElement=GetElementAt(route,i);
      while (CurrentElement!=arret)
     {
         if((CurrentElement->info.order.ID==arret->info.order.ID)&&(CurrentElement->info.isDeparture!=arret->info.isDeparture)){
             return(1);//the departure of client is before the arival 
         }
         i++;
-        CurrentElement=GetElementAt(car.Route,i);
+        CurrentElement=GetElementAt(route,i);
     }
     return(0);
     }
 }    
+
+int CheckDeparturTime(LinkedList route){
+    int i=0;
+    Time timeMax;
+    Time timeMin;
+    SingleLinkedListElem* CurrentElement;
+    CurrentElement=GetElementAt(route,i);
+    while (CurrentElement!=route.tail)
+    {
+        timeMax=CurrentElement->info.order.intervallearrivee[1];
+        timeMin=CurrentElement->info.order.intervallearrivee[0];
+
+        if(!(CurrentElement->info.priseencharge>timeMin)&&(CurrentElement->info.priseencharge<timeMax)){
+            return(0);
+        }
+        i++;
+        CurrentElement=GetElementAt(route,i);
+    }
+    return(1);
+
+
+}
