@@ -40,47 +40,46 @@ Client client8;
 listclient[7]=client8;
 
 
+// client1 initialisation
 
-for (int i=0; i<8; i++){
+    listclient[0].depart.X= -5.524;
+    listclient[0].depart.Y= 1.701;
 
-    listclient[i].arrivee.X = ;
-    listclient[i].arrivee.Y = ;
+    listclient[0].arrivee.X = 6.473 ;
+    listclient[0].arrivee.Y = 6.536;
 
-    listclient[i].depart.X= ;
-    listclient[i].depart.Y= ;
+    listclient[0].dureemax.heure = 0;
+    listclient[0].dureemax.minute = 30;
 
-    listclient[i].depot.heure=;
-    listclient[i].depot.minute=;
+    listclient[0].ID= 1;
 
-    listclient[i].dureemax.heure;
-    listclient[i].dureemax.minute;
+    listclient[0].intervallearrivee[0].heure= 0;
+    listclient[0].intervallearrivee[0].minute= 0;
 
-    listclient[i].ID=;
-
-    listclient[i].intervallearrivee[0].heure=;
-    listclient[i].intervallearrivee[0].minute=;
-
-    listclient[i].intervallearrivee[1].heure=;
-    listclient[i].intervallearrivee[1].minute=;
+    listclient[0].intervallearrivee[1].heure=24;
+    listclient[0].intervallearrivee[1].minute=0;
 
 
-    listclient[i].intevalledepart[0].heure=;
-    listclient[i].intevalledepart[0].minute=;
+    listclient[0].intevalledepart[0].heure=3;
+    listclient[0].intevalledepart[0].minute=33;
 
-    listclient[i].intevalledepart[1].heure=;
-    listclient[i].intevalledepart[1].minute=;
-    
-    listclient[i].nbrpersonne =  ;
+    listclient[0].intevalledepart[1].heure=3;
+    listclient[0].intevalledepart[1].minute=48;
 
-    listclient[i].priseencharge.heure = ;
-    listclient[i].priseencharge.minute = ;
+    listclient[0].nbrpersonne = 1 ;
 
 
-}
+
+// client 2 initialisation
 
 
 
 
+    listclient[1].depart.X= -9.908;
+    listclient[1].depart.Y= 6.598;
+
+    listclient[1].arrivee.X = -1.367 ;
+    listclient[1].arrivee.Y = 4.495;
 
 
     listclient[1].dureemax.heure = 0;
@@ -339,3 +338,14 @@ for (int i=0 ; i<17 ; i++){
 // le taxi revient de sa course pour repartir à l'entrepot donc la dernière valeur de la liste c'est l'entrepot
     return(0);
 }
+
+
+
+
+
+
+
+
+// 2 -> nbr voiture 16 -> nombre de demandes totale  480 -> tps de travail taxi 3 -> capa taxi  30 -> temps maximale que peut passer une personne dans le vehicule
+
+
