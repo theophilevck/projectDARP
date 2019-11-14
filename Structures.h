@@ -1,23 +1,27 @@
+#pragma once
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #include <locale.h>
 #include <stdbool.h>
+#include "liste.h"
 
 
-typedef struct Pos {
+
+
+typedef struct position {
 	int X;
 	int Y;
 }Pos;
 
 
-typedef struct  Time { 
+typedef struct  time { 
 	int heure;
 	int minute;
 }Time;
 
 
-typedef struct Client
+typedef struct client
 {
 	bool isTaken;
 	int ID;
@@ -30,24 +34,16 @@ typedef struct Client
 }Client;
 
 
-typedef struct Voiture {
-	int Id;
-	int Cn;
-	Pos depot;
-	Time Edepart;
-	Time Earrivee;
-	Time dtravaille;
-	LinkedList Route;
-}Voiture;
 
-typedef struct ElementListe {
+
+typedef struct elementListe {
 	bool isDeparture;// departure or arival
 	Client order;
 	Time priseencharge;
 	Time depot;
 }ElementListe;
 
-typedef struct Depot {
+typedef struct depot {
 	Pos position;
 	int nbVoiture;
 }Depot;

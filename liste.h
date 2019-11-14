@@ -12,10 +12,19 @@ typedef struct SingleLinkedListElem {
 
 typedef struct LinkedList {
 	SingleLinkedListElem *head;
-	int size;
 	SingleLinkedListElem *tail;
+	int size;
 } LinkedList;
 
+typedef struct voiture {
+	int Id;
+	int Cn;
+	Pos depot;
+	Time Edepart;
+	Time Earrivee;
+	Time dtravaille;
+	LinkedList Route;
+}Voiture;
 
 // Crée une liste chaînée unilatère vide et renvoie un pointeur sur celle-ci
 LinkedList* NewLinkedList();
@@ -24,7 +33,7 @@ LinkedList* NewLinkedList();
 SingleLinkedListElem* NewLinkedListElement(ElementListe info);
 
 // Renvoie un pointeur sur le maillon qui se trouve en ième position à partir de 1
-SingleLinkedListElem* GetElementAt(LinkedList* liste, int i);
+SingleLinkedListElem* GetElementAt(LinkedList liste, int i);
 
 // Ajoute une nouvelle personne dans la liste chaînée en ième position
 // Cette fonction fait appel à la fonction NewLinkedListElement(Enregistrement pers) pour créer un maillon
