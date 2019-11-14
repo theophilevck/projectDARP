@@ -43,7 +43,7 @@ SingleLinkedListElem* GetElementAt(LinkedList* Liste, int i) {
 
 // Ajoute une nouvelle personne dans la liste chaînée en ième position
 // Cette fonction fait appel à la fonction NewLinkedListElement(Enregistrement pers) pour créer un maillon
-int InsertElementAt(LinkedList *Liste, int i, Enregistrement pers) {
+int InsertElementAt(LinkedList *Liste, int i, ElementListe info) {
 	SingleLinkedListElem *CurrentElement, *NewElement;
 	if (Liste == NULL) return(0);
 	// recherche de l'élément qui se trouve déjà en position i
@@ -51,7 +51,7 @@ int InsertElementAt(LinkedList *Liste, int i, Enregistrement pers) {
 	// s'il y en a un
 	if (CurrentElement != NULL) {
 		// on insère un nouvel élément
-		NewElement = NewLinkedListElement(pers);
+		NewElement = NewLinkedListElement(info);
 		// son suivant est alors l'élément courant
 		NewElement->next = CurrentElement;
 
@@ -71,7 +71,7 @@ int InsertElementAt(LinkedList *Liste, int i, Enregistrement pers) {
 	}
 	else {
 		if (Liste->size == 0) { // insertion en tête de l'unique élément
-			NewElement = NewLinkedListElement(pers);
+			NewElement = NewLinkedListElement(info);
 			if (NewElement != NULL) {
 				Liste->head = NewElement;
 				Liste->size = 1;
@@ -83,7 +83,7 @@ int InsertElementAt(LinkedList *Liste, int i, Enregistrement pers) {
 			}
 		}
 		if (Liste->size <= i) { // insertion en queue
-			NewElement = NewLinkedListElement(pers);
+			NewElement = NewLinkedListElement(info);
 			if (NewElement != NULL) {
 				Liste->tail->next = NewElement;
 				Liste->tail = NewElement;
@@ -157,6 +157,19 @@ int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
 	}
 }
 
+void afficherListe(LinkedList *liste)
+{
+	if (liste == NULL)
+	{
+		exit(EXIT_FAILURE);
+	}
+	
+	SingleLinkedListElem* courant = liste->head;
 
-
-
+	while (courant != NULL)
+	{
+		printf("%d -> ", courant->info.order.ID);
+		courant = courant->next;
+	}
+	printf("NULL\n");
+}

@@ -19,11 +19,11 @@ typedef struct LinkedList {
 typedef struct voiture {
 	int Id;
 	int Cn;
-	Pos depot;
+	Depot depot;
 	Time Edepart;
 	Time Earrivee;
 	Time dtravaille;
-	LinkedList Route;
+	LinkedList* Route;
 }Voiture;
 
 // Crée une liste chaînée unilatère vide et renvoie un pointeur sur celle-ci
@@ -42,4 +42,5 @@ int InsertElementAt(LinkedList* liste, int i, ElementListe info);
 // Suppression et destruction d'un élément de liste chainée
 int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* Elem);
 
+void afficherListe(LinkedList *liste);
 

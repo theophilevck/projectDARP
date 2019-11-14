@@ -13,9 +13,9 @@ int CheckCapacity (Voiture car);
 int CheckDeparturBeforeArival (LinkedList route,SingleLinkedListElem* arret);
 
 //check if temp depos is in the time window
-int CheckDeparturTime (LinkedList route);
+int CheckDeparturTime (Voiture car);
 
-int CheckArivalTime (LinkedList route);
+int CheckArivalTime (Voiture car);
 
 int CheckWorckTime (Voiture car);
 
