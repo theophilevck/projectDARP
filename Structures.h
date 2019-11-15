@@ -10,8 +10,8 @@
 
 
 typedef struct position {
-	int X;
-	int Y;
+	float X;
+	float Y;
 }Pos;
 
 
