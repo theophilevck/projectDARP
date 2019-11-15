@@ -8,22 +8,21 @@
 
 
 int CheckCapacity (Voiture car){
-    int capaciter=0;
 	 SingleLinkedListElem* CurrentElement=car.Route->head;
     while (CurrentElement !=NULL)
     {
-        if (CurrentElement->info.isDeparture==1){
-            capaciter=capaciter + CurrentElement->info.order.nbrpersonne;
+        if (CurrentElement->info.isDeparture==true){
+			CurrentElement->info.capaciter = CurrentElement->info.capaciter + CurrentElement->info.order.nbrpersonne;
         }
         else{
-            capaciter=capaciter - CurrentElement->info.order.nbrpersonne;
+			CurrentElement->info.capaciter = CurrentElement->info.capaciter - CurrentElement->info.order.nbrpersonne;
         }
-        if (car.Cn<capaciter){
+        if (car.Cn< CurrentElement->info.capaciter){
             return(0);//capaciter depasser
         }
         CurrentElement=CurrentElement->next;
     }
-    if(capaciter==0){
+    if(CurrentElement->info.capaciter ==0){
 		return(1);
     }
 	else
@@ -32,14 +31,13 @@ int CheckCapacity (Voiture car){
 	}
 }
 
-int CheckDeparturBeforeArival (LinkedList route,SingleLinkedListElem* arret){
+int CheckDeparturBeforeArival (Voiture car,SingleLinkedListElem* arret){
     if(arret->info.isDeparture==1){
         return(0);//if the element is a departure no need to call the function
     }
     else{
     int i=0;
-    SingleLinkedListElem* CurrentElement;
-    CurrentElement=GetElementAt(route,i);
+	SingleLinkedListElem* CurrentElement = car.Route->head;
     while (CurrentElement!=arret)
 	{
         if((CurrentElement->info.order.ID==arret->info.order.ID)&&(CurrentElement->info.isDeparture!=arret->info.isDeparture)){
@@ -48,7 +46,7 @@ int CheckDeparturBeforeArival (LinkedList route,SingleLinkedListElem* arret){
 			
         }
         i++;
-        CurrentElement=GetElementAt(route,i);
+		CurrentElement = CurrentElement->next;
     }
     return(0);
     }

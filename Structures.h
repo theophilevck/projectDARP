@@ -41,6 +41,7 @@ typedef struct elementListe {
 	Client order;
 	Time priseencharge;
 	Time depot;
+	int capaciter;
 }ElementListe;
 
 typedef struct depot {
