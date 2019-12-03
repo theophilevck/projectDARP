@@ -320,7 +320,7 @@ float Matrice_des_distances[17][17];
 
 for (int i=0 ; i<17 ; i++){
     for (int j=0 ; j<17 ; j++){
-        Matrice_des_distances[i][j]= sqrt( pow((A[j].X -A[i].X),2) + pow((A[j].Y -A[i].Y),2))
+		Matrice_des_distances[i][j] = sqrt(pow((A[j].X - A[i].X), 2) + pow((A[j].Y - A[i].Y), 2));
         printf( "%d", Matrice_des_distances[i][j]);
 
     }
