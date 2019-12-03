@@ -6,5 +6,11 @@
 #include "liste.h"
 #include "Structures.h"
 
-//cluster temp 1
+//cluster temp arriver
 LinkedList* clusterHeureAriver(Client listeclient[], Client test);
+
+//cluster temp depart
+LinkedList* clusterHeureDepart(Client listeclient[], Client test);
+
+//cluster capaciter
+LinkedList* clusterCapaciter(Client listeclient[], ElementListe test,int capa, int capMax);
