@@ -1,4 +1,3 @@
-#pragma once
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -16,7 +15,7 @@ LinkedList* clusterHeureAriver(Client listeclient[], Client test) {
 
 	ElementListe elementAdd;
 	elementAdd.order = test;
-	
+
 
 
 	InsertElementAt(listCluster, 0, elementAdd);
@@ -24,19 +23,19 @@ LinkedList* clusterHeureAriver(Client listeclient[], Client test) {
 	int g = 0;
 	int tampon = 0;
 	intevallecluster[0] = test.intervallearrivee[0];
-	intevallecluster[0].heure = intevallecluster[0].heure-1;
+	intevallecluster[0].heure = intevallecluster[0].heure - 1;
 	intevallecluster[1] = test.intervallearrivee[1];
 	intevallecluster[1].heure = intevallecluster[1].heure + 1;
-	
+
 
 	for (int i = 0; i < (sizeof(listeclient)); i++) {
-			if ((est_sup(listeclient[i].intervallearrivee[0],intevallecluster[0]) == true) && (est_inf(listeclient[i].intervallearrivee[1], intevallecluster[1]) == true)) {
-				if (listeclient[i].ID!= test.ID) {
+		if ((est_sup(listeclient[i].intervallearrivee[0], intevallecluster[0]) == true) && (est_inf(listeclient[i].intervallearrivee[1], intevallecluster[1]) == true)) {
+			if (listeclient[i].ID != test.ID) {
 				elementAdd.order = listeclient[i];
-					InsertElementAt(listCluster, 1, elementAdd);
-				}
+				InsertElementAt(listCluster, 1, elementAdd);
 			}
 		}
+	}
 	return(listCluster);
 }
 
@@ -46,7 +45,7 @@ LinkedList* clusterHeureDepart(Client listeclient[], Client test) {
 
 	ElementListe elementAdd;
 	elementAdd.order = test;
-	
+
 
 
 	InsertElementAt(listCluster, 0, elementAdd);
@@ -54,19 +53,19 @@ LinkedList* clusterHeureDepart(Client listeclient[], Client test) {
 	int g = 0;
 	int tampon = 0;
 	intevallecluster[0] = test.intevalledepart[0];
-	intevallecluster[0].heure = intevallecluster[0].heure-1;
+	intevallecluster[0].heure = intevallecluster[0].heure - 1;
 	intevallecluster[1] = test.intevalledepart[1];
 	intevallecluster[1].heure = intevallecluster[1].heure + 1;
-	
+
 
 	for (int i = 0; i < (sizeof(listeclient)); i++) {
-			if ((est_sup(listeclient[i].intevalledepart[0],intevallecluster[0]) == true) && (est_inf(listeclient[i].intevalledepart[1], intevallecluster[1]) == true)) {
-				if (listeclient[i].ID!= test.ID) {
+		if ((est_sup(listeclient[i].intevalledepart[0], intevallecluster[0]) == true) && (est_inf(listeclient[i].intevalledepart[1], intevallecluster[1]) == true)) {
+			if (listeclient[i].ID != test.ID) {
 				elementAdd.order = listeclient[i];
-					InsertElementAt(listCluster, 1, elementAdd);
-				}
+				InsertElementAt(listCluster, 1, elementAdd);
 			}
 		}
+	}
 	return(listCluster);
 }
 
@@ -89,4 +88,25 @@ LinkedList* clusterCapaciter(Client listeclient[], ElementListe test, int capaAc
 		}
 	}
 	return(listCluster);
+}
+
+float distance(Pos p1, Pos p2) {
+
+	return(sqrt(pow((p1.X - p2.X), 2) + pow((p1.Y - p2.Y), 2)));
+
+}
+
+LinkedList* clustergeographique(ElementListe list[100], ElementListe client, int nbdemande, int dist) {
+
+	LinkedList* cluster = NewLinkedList();
+
+
+	for (int k = 0; k < nbdemande + 1; k++) {
+
+		if (distance(client.order.depart, list[k].order.depart) < dist) {
+			InsertElementAt(cluster, 0, list[k]);
+		}
+	}
+	printf("tous les clients proches a moins de %d metres du client %d sont :\n", dist, client.order.ID);
+	return(cluster);
 }
