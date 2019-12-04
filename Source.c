@@ -18,18 +18,18 @@ float distance(Pos p1, Pos p2) {
 
 }
 
-LinkedList* clustergeographique(ElementListe list[100] , int client, int nbdemande, int dist) {
+LinkedList* clustergeographique(ElementListe list[100] , ElementListe client, int nbdemande, int dist) {
 
 	LinkedList* cluster = NewLinkedList();
 	
 
 	for (int k = 0; k < nbdemande + 1; k++) {
 
-		if (distance(list[client].order.depart, list[k].order.depart) < dist) {
+		if (distance(client.order.depart, list[k].order.depart) < dist) {
 			InsertElementAt(cluster, 0, list[k]);
 		}
 	}
-	printf("tous les clients proches a moins de %d metres du client %d sont :\n", dist, client);
+	printf("tous les clients proches a moins de %d metres du client %d sont :\n", dist, client.order.ID);
 	return(cluster);
 }
 	
@@ -65,8 +65,9 @@ int main() {
 
 
 
-		for (int k = 0; k < nbdemande + 1; k++) { // +2 car 2 entrepots 2* car départ , arrivée
+		for (int k = 0; k < nbdemande + 1; k++) { 
 
+			
 			int lecture1 = fscanf(fichier, "%d %f %f %d %d %d %d", &index, &abscisses, &ordonnees, &capacite, &nbclient, &tempsdepart,
 				&tempsarrivee);
 
@@ -90,7 +91,7 @@ int main() {
 			printf("%d\n", listeclient[k].order.intevalledepart[0].minute);
 		}
 
-		for (int k = 1; k <  nbdemande + 1; k++) { // +2 car 2 entrepots 2* car départ , arrivée
+		for (int k = 1; k <  nbdemande + 1; k++) { 
 
 			int lecture2 = fscanf(fichier, "%d %f %f %d %d %d %d", &index, &abscisses, &ordonnees, &capacite, &nbclient, &tempsdepart,
 				&tempsarrivee);
@@ -119,45 +120,33 @@ int main() {
 
 	}
 
-	//ici on décide de créer la matrice avec deux listes A contenant les positions.
+	
 
 
 
-	Pos A[100];
-	for (int k = 0; k < nbdemande + 1; k++) {
-
-		
-		A[k] = listeclient[k].order.depart;
-
-	}
-
-
-
-	for (int k =1; k <  nbdemande +1 ; k++) {
-
-		A[ nbdemande  + k ] = listeclient[k].order.arrivee;
-
-	}
-	// on créé la matrice des distances
-	float Matrice_des_distances[100][100];
-
-	for (int i = 0; i < 2 * nbdemande +1; i++) {
-		for (int j = 0; j < 2 * nbdemande +1 ; j++) {
-			float calcul = sqrt(pow((A[i].X - A[j].X), 2) + pow((A[i].Y - A[j].Y), 2));
-			Matrice_des_distances[i][j] = calcul;
-
-
-		}
-
-	}
+	
 	//on parcourt toutes les lignes pour connaitre chaque cluster
 	// on doit inclure le code du cluster ici:
 
 
+
+
 	LinkedList* tmp;
-	tmp=clustergeographique(listeclient, 2, nbdemande,5);
+	tmp=clustergeographique(listeclient, listeclient[1], nbdemande,5);
 
 	afficherListe(tmp);
+
+
+
+
+
+
+
+
+
+
+
+
 
 	system("pause");
 	return (0);
@@ -165,5 +154,9 @@ int main() {
 
 
 }
+
+
+
+
 
 
