@@ -4,8 +4,11 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include "cluster.h"
 #include "liste.h"
 #include "check.h"
+#include "lecture.h"
+#include "Structures.h"
 #define TAILLE_MAX 1000 
 
 
@@ -29,8 +32,7 @@ LinkedList* lecture_fichier(char name[]) {
 	int tempsarrivee;
 	ElementListe listeclient[100];
 
-	Voiture listevoiture[10];
-
+	printf("coucou \n");
 	//on ouvre le fichier texte pour prélever toutes les informations
 	if (fichier != NULL)
 	{
@@ -41,13 +43,7 @@ LinkedList* lecture_fichier(char name[]) {
 
 		// on créé une liste de voiture
 
-		for (int j = 0; j < nbdetaxi; j++) {
 
-			listevoiture[j].Id = j + 1;
-			//listevoiture[j].Cn = 5;
-			listevoiture[j].dtravaille.heure = dureetravail / 60;
-			listevoiture[j].dtravaille.minute = dureetravail % 60;
-		}
 
 
 
