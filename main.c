@@ -1,351 +1,167 @@
-#include <stdlib.h>
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
-#include <time.h>
-#include <locale.h>
-#include "liste.h"
-#include "Structures.h"
+#include <stdlib.h>
 #include <math.h>
-#define TAILLE_MAX 10000
+#include "liste.h"
+#include "check.h"
+#include "cluster.h"
+#include "Structures.h"
 
+#define TAILLE_MAX 1000 // Tableau de taille 1000
 
 
+int main() {
 
 
 
+	FILE* fichier = NULL;
 
-int main(){
+	fichier = fopen("a4-40.txt", "r");
+	int nbdetaxi, nbdemande, dureetravail, capacite, dureemaxdemande;
+	printf("coucou \n");
+	int index;
+	float abscisses;
+	float ordonnees;
+	int nbclient;
+	int tempsdepart;
+	int tempsarrivee;
+	ElementListe listeclient[100];
 
-// le taxi part de l'entrepot donc la première valeur de la liste c'est la position de l'entrepot
 
-Pos entrepot;
-entrepot.X =0;
-entrepot.Y=0;
 
-Client listclient[8];
-Client client1;
-listclient[0]=client1;
-Client client2;
-listclient[1]=client2;
-Client client3;
-listclient[2]=client3;
-Client client4;
-listclient[3]=client4;
-Client client5;
-listclient[4]=client5;
-Client client6;
-listclient[5]=client6;
-Client client7;
-listclient[6]=client7;
-Client client8;
-listclient[7]=client8;
+	fichier = NULL;
 
+	fichier = fopen("a4-40.txt", "r");
 
-// client1 initialisation
 
-    listclient[0].depart.X= -5.524;
-    listclient[0].depart.Y= 1.701;
+	//on ouvre le fichier texte pour pr�lever tous les documents
+	if (fichier != NULL)
+	{
+		int lire;
+		lire = fscanf(fichier, "%d %d %d %d %d", &nbdetaxi, &nbdemande, &dureetravail, &capacite, &dureemaxdemande);
+		printf("je suis dans le fichier\n");
+		printf("%d\n", nbdetaxi);
 
-    listclient[0].arrivee.X = 6.473 ;
-    listclient[0].arrivee.Y = 6.536;
 
-    listclient[0].dureemax.heure = 0;
-    listclient[0].dureemax.minute = 30;
 
-    listclient[0].ID= 1;
 
-    listclient[0].intervallearrivee[0].heure= 0;
-    listclient[0].intervallearrivee[0].minute= 0;
 
-    listclient[0].intervallearrivee[1].heure=24;
-    listclient[0].intervallearrivee[1].minute=0;
+		for (int k = 0; k < nbdemande + 1; k++) {
 
 
-    listclient[0].intevalledepart[0].heure=3;
-    listclient[0].intevalledepart[0].minute=33;
+			int lecture1 = fscanf(fichier, "%d %f %f %d %d %d %d", &index, &abscisses, &ordonnees, &capacite, &nbclient, &tempsdepart,
+				&tempsarrivee);
 
-    listclient[0].intevalledepart[1].heure=3;
-    listclient[0].intevalledepart[1].minute=48;
 
-    listclient[0].nbrpersonne = 1 ;
 
+			listeclient[k].order.ID = index;
+			printf("%d     ", listeclient[k].order.ID);
+			listeclient[k].order.depart.X = abscisses;
+			printf("%f   ", listeclient[k].order.depart.X);
+			listeclient[k].order.depart.Y = ordonnees;
+			printf("%f   ", listeclient[k].order.depart.Y);
+			listeclient[k].order.nbrpersonne = nbclient;
+			printf("%d   ", listeclient[k].order.nbrpersonne);
+			listeclient[k].order.intevalledepart[0].heure = tempsdepart / 60;
+			printf("%d:", listeclient[k].order.intevalledepart[0].heure);
+			listeclient[k].order.intevalledepart[0].minute = tempsdepart % 60;
+			printf("%d   ", listeclient[k].order.intevalledepart[0].minute);
+			listeclient[k].order.intevalledepart[1].heure = tempsarrivee / 60;
+			printf("%d:", listeclient[k].order.intevalledepart[1].heure);
+			listeclient[k].order.intevalledepart[1].minute = tempsarrivee % 60;
+			printf("%d\n", listeclient[k].order.intevalledepart[0].minute);
+		}
 
+		for (int k = 1; k < nbdemande + 2; k++) {
 
-// client 2 initialisation
+			int lecture2 = fscanf(fichier, "%d %f %f %d %d %d %d", &index, &abscisses, &ordonnees, &capacite, &nbclient, &tempsdepart,
+				&tempsarrivee);
 
+			printf("%d     ", index);
+			listeclient[k].order.arrivee.X = abscisses;
+			printf("%f   ", listeclient[k].order.arrivee.X);
+			listeclient[k].order.arrivee.Y = ordonnees;
+			printf("%f   ", listeclient[k].order.arrivee.Y);
+			listeclient[k].order.nbrpersonne = nbclient;
+			printf("%d   ", listeclient[k].order.nbrpersonne);
+			listeclient[k].order.intervallearrivee[0].heure = tempsdepart / 60;
+			printf("%d:", listeclient[k].order.intervallearrivee[0].heure);
+			listeclient[k].order.intervallearrivee[0].minute = tempsdepart % 60;
+			printf("%d   ", listeclient[k].order.intervallearrivee[0].minute);
+			listeclient[k].order.intervallearrivee[1].heure = tempsarrivee / 60;
+			printf("%d:", listeclient[k].order.intervallearrivee[1].heure);
+			listeclient[k].order.intervallearrivee[1].minute = tempsarrivee % 60;
+			printf("%d\n", listeclient[k].order.intervallearrivee[0].minute);
 
+		}
 
 
-    listclient[1].depart.X= -9.908;
-    listclient[1].depart.Y= 6.598;
+		fclose(fichier); // On ferme le fichier qui a �t� ouvert
 
-    listclient[1].arrivee.X = -1.367 ;
-    listclient[1].arrivee.Y = 4.495;
 
+	}
 
-    listclient[1].dureemax.heure = 0;
-    listclient[1].dureemax.minute = 30;
+	//on parcourt toutes les lignes pour connaitre chaque cluster
+	// on doit inclure le code du cluster ici:
 
-    listclient[1].ID= 2;
+	LinkedList* tmp;
+	tmp = clusterGeographique(listeclient, listeclient[1], 40, 5.5);
 
-    listclient[1].intervallearrivee[0].heure= 0;
-    listclient[1].intervallearrivee[0].minute= 0;
 
-    listclient[1].intervallearrivee[1].heure=24;
-    listclient[1].intervallearrivee[1].minute=0;
 
+	LinkedList* tmp1;
+	tmp1 = clusterHeureDepart(listeclient, listeclient[1]);
 
-    listclient[1].intevalledepart[0].heure=1;
-    listclient[1].intevalledepart[0].minute=47;
 
-    listclient[1].intevalledepart[1].heure=2;
-    listclient[1].intevalledepart[1].minute=2;
+	LinkedList* tmp2;
+	tmp2 = clusterHeureAriver(listeclient, listeclient[1]);
 
-    listclient[1].nbrpersonne = 1 ;
 
+	afficherListe(tmp);
 
+	afficherListe(tmp1);
 
-// client 3 initialisation
+	afficherListe(tmp2);
 
 
-    listclient[2].depart.X= 4.771   ;
-    listclient[2].depart.Y= 6.467;
+	LinkedList* route;
+	route = NewLinkedList();
 
-    listclient[2].arrivee.X = 4.325  ;
-    listclient[2].arrivee.Y = 8.434;
+	route = InsertElementAleatoire(0, listeclient, route);
 
+	InsertElementAt(route, 0, listeclient[0]);
+	
 
-    listclient[2].dureemax.heure = 0;
-    listclient[2].dureemax.minute = 30;
+	afficherListe(route);
+	int tampon;
+	for (int i = 0; i < 2; i++)
+	{
+		tampon = aleatoire(nbdemande);
+		printf("%d\n", tampon);
+	}
 
-    listclient[2].ID= 3;
+	route= InsertElementAleatoire(tampon, listeclient , route);
+	afficherListe(route);
+	Voiture car;
+	car.Route = route;
+	car.Cn = 5;
+	printf("%d %d \n", listeclient[22].order.intervallearrivee[0].heure, listeclient[22].order.intervallearrivee[1].heure);
+	printf("%d %d \n", listeclient[22].order.intevalledepart[0].heure, listeclient[22].order.intevalledepart[1].heure);
+	printf("%d \n",CheckCapacity(car));
+	
 
-    listclient[2].intervallearrivee[0].heure= 0;
-    listclient[2].intervallearrivee[0].minute= 0;
+	//ElementListe creation_client_depart(Client listeclient[], ElementListe listedepart) {
+		// Lecture du fichier texte
 
-    listclient[2].intervallearrivee[1].heure=24;
-    listclient[2].intervallearrivee[1].minute=0;
 
 
-    listclient[2].intevalledepart[0].heure=5;
-    listclient[2].intevalledepart[0].minute=18;
+		// Chargement de la liste des clients de d�parts dans un Element liste
 
-    listclient[2].intevalledepart[1].heure=5;
-    listclient[2].intevalledepart[1].minute=33;
+	//}
+	system("pause");
+	return (0);
 
-    listclient[2].nbrpersonne = 1 ;
 
-
-
-
-// client 4 initialisation
-
-
-
-    listclient[3].depart.X= 8.902  ;
-    listclient[3].depart.Y= 3.344;
-
-    listclient[3].arrivee.X =  -2.297  ;
-    listclient[3].arrivee.Y = -9.508;
-
-
-    listclient[3].dureemax.heure = 0;
-    listclient[3].dureemax.minute = 30;
-
-    listclient[3].ID= 4;
-
-    listclient[3].intervallearrivee[0].heure= 0;
-    listclient[3].intervallearrivee[0].minute= 0;
-
-    listclient[3].intervallearrivee[1].heure=24;
-    listclient[3].intervallearrivee[1].minute=0;
-
-
-    listclient[3].intevalledepart[0].heure=6;
-    listclient[3].intevalledepart[0].minute=24;
-
-    listclient[3].intevalledepart[1].heure=6;
-    listclient[3].intevalledepart[1].minute=39;
-
-    listclient[3].nbrpersonne = 1 ;
-
-
-
-
-// client 5 initialisation
-
-
-
-    listclient[4].depart.X=  -8.599 ;
-    listclient[4].depart.Y=  1.372;
-
-    listclient[4].arrivee.X =  2.356  ;
-    listclient[4].arrivee.Y =  0.364;
-
-
-    listclient[4].dureemax.heure = 0;
-    listclient[4].dureemax.minute = 30;
-
-    listclient[4].ID= 5;
-
-    listclient[4].intervallearrivee[0].heure= 0;
-    listclient[4].intervallearrivee[0].minute= 0;
-
-    listclient[4].intervallearrivee[1].heure=24;
-    listclient[4].intervallearrivee[1].minute=0;
-
-
-    listclient[4].intevalledepart[0].heure=2;
-    listclient[4].intevalledepart[0].minute=38;
-
-    listclient[4].intevalledepart[1].heure=2;
-    listclient[4].intevalledepart[1].minute=53;
-
-    listclient[4].nbrpersonne = 1 ;
-
-
-
-
-// client6 initialisation
-
-
-
-    listclient[5].depart.X= -7.993  ;
-    listclient[5].depart.Y=  8.502;
-
-    listclient[5].arrivee.X =  -1.315 ;
-    listclient[5].arrivee.Y = 1.371;
-
-
-    listclient[5].dureemax.heure = 0;
-    listclient[5].dureemax.minute = 30;
-
-    listclient[5].ID= 6;
-
-    listclient[5].intervallearrivee[0].heure= 0;
-    listclient[5].intervallearrivee[0].minute= 0;
-
-    listclient[5].intervallearrivee[1].heure=24;
-    listclient[5].intervallearrivee[1].minute=0;
-
-
-    listclient[5].intevalledepart[0].heure=1;
-    listclient[5].intevalledepart[0].minute=0;
-
-    listclient[5].intevalledepart[1].heure=1;
-    listclient[5].intevalledepart[1].minute=15;
-
-    listclient[5].nbrpersonne = 1 ;
-
-
-
-// client 7 initialisation
-
-
-
-    listclient[6].depart.X= -2.572  ;
-    listclient[6].depart.Y=  9.361;
-
-    listclient[6].arrivee.X = 5.847 ;
-    listclient[6].arrivee.Y = 9.129;
-
-
-    listclient[6].dureemax.heure = 0;
-    listclient[6].dureemax.minute = 30;
-
-    listclient[6].ID= 7;
-
-    listclient[6].intervallearrivee[0].heure= 0;
-    listclient[6].intervallearrivee[0].minute= 0;
-
-    listclient[6].intervallearrivee[1].heure=24;
-    listclient[6].intervallearrivee[1].minute=0;
-
-
-    listclient[6].intevalledepart[0].heure=4;
-    listclient[6].intevalledepart[0].minute=20;
-
-    listclient[6].intevalledepart[1].heure=4;
-    listclient[6].intevalledepart[1].minute=35;
-
-    listclient[6].nbrpersonne = 1 ;
-
-
-
-
-// client 8 initialisation
-
-
-
-    listclient[7].depart.X= -0.482 ;
-    listclient[7].depart.Y= -8.983;
-
-    listclient[7].arrivee.X = 9.221 ;
-    listclient[7].arrivee.Y = -3.885;
-
-
-    listclient[7].dureemax.heure = 0;
-    listclient[7].dureemax.minute = 30;
-
-    listclient[7].ID= 8;
-
-    listclient[7].intervallearrivee[0].heure= 0;
-    listclient[7].intervallearrivee[0].minute= 0;
-
-    listclient[7].intervallearrivee[1].heure=24;
-    listclient[7].intervallearrivee[1].minute=0;
-
-
-    listclient[7].intevalledepart[0].heure=2;
-    listclient[7].intevalledepart[0].minute=48;
-
-    listclient[7].intevalledepart[1].heure=3;
-    listclient[7].intevalledepart[1].minute=3;
-
-    listclient[7].nbrpersonne = 1 ;
-
-
-
-// matrice des distances:
-
-Pos A[17];
-A[0]=entrepot;
-for (int k=0; k<8 ; k++){
-    A[k]=listclient[k].depart;
 
 }
-for (int k=8; k<17 ; k++){
-    A[k]=listclient[k].arrivee;
-}
-float Matrice_des_distances[17][17];
-
-for (int i=0 ; i<17 ; i++){
-    for (int j=0 ; j<17 ; j++){
-		Matrice_des_distances[i][j] = sqrt(pow((A[j].X - A[i].X), 2) + pow((A[j].Y - A[i].Y), 2));
-        printf( "%d", Matrice_des_distances[i][j]);
-
-    }
-}
-
-
-    //ça on le garde pour nous:
-
-
-
-
-
-
-
-// le taxi revient de sa course pour repartir à l'entrepot donc la dernière valeur de la liste c'est l'entrepot
-    return(0);
-}
-
-
-
-
-
-
-
-
-// 2 -> nbr voiture 16 -> nombre de demandes totale  480 -> tps de travail taxi 3 -> capa taxi  30 -> temps maximale que peut passer une personne dans le vehicule
-
-

@@ -173,3 +173,33 @@ void afficherListe(LinkedList *liste)
 	}
 	printf("NULL\n");
 }
+
+LinkedList* InsertElementAleatoire(int aleatoire, ElementListe listeclient[100], LinkedList* route) {
+
+	int id = listeclient[aleatoire].order.ID;
+	int i = 0;
+	if (route == NULL)
+	{
+		InsertElementAt(route, 0, listeclient[aleatoire]);
+		while (listeclient[aleatoire + i].order.ID != NULL) {
+			if (listeclient[aleatoire + i].order.ID == id) {
+				InsertElementAt(route, 1, listeclient[aleatoire + i]);
+			}
+			i++;
+		}
+	}
+	else {
+		InsertElementAt(route, 1, listeclient[aleatoire]);
+		while (listeclient[aleatoire + i].order.ID != NULL) {
+			if (listeclient[aleatoire + i].order.ID == id) {
+				InsertElementAt(route, 2, listeclient[aleatoire + i]);
+			}
+			i++;
+		}
+	}
+	
+	return(route);
+}
+
+
+

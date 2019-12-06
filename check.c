@@ -20,15 +20,13 @@ int CheckCapacity (Voiture car){
         if (car.Cn< CurrentElement->info.capaciter){
             return(0);//capaciter depasser
         }
+		if (CurrentElement == car.Route->tail) {
+			return(1);
+
+		}
         CurrentElement=CurrentElement->next;
+		
     }
-    if(CurrentElement->info.capaciter ==0){
-		return(1);
-    }
-	else
-	{
-		return(0);//capaciter non depacer 
-	}
 }
 
 int CheckDeparturBeforeArival (Voiture car,SingleLinkedListElem* arret){
@@ -101,7 +99,9 @@ int CheckWorckTime (Voiture car){
 	tempsCourse.minute=car.Earrivee.minute-car.Edepart.minute;
 
     if(est_sup(tempsCourse,car.dtravaille)){
+
         return(0);
+
     }
     else
     {
@@ -111,11 +111,11 @@ int CheckWorckTime (Voiture car){
 
 bool est_sup(Time time1, Time time2)
 {
-	if (time1.heure > time2.heure) {
+	if (time1.heure >= time2.heure) {
 		return(true);
 	}
 	if (time1.heure == time2.heure) {
-		if (time1.minute > time2.minute) {
+		if (time1.minute >= time2.minute) {
 			return(true);
 		}
 		else
@@ -128,11 +128,11 @@ bool est_sup(Time time1, Time time2)
 
 bool est_inf(Time time1, Time time2)
 {
-	if (time1.heure < time2.heure) {
+	if (time1.heure <= time2.heure) {
 		return(true);
 	}
 	if (time1.heure == time2.heure) {
-		if (time1.minute < time2.minute) {
+		if (time1.minute <= time2.minute) {
 			return(true);
 		}
 		else
