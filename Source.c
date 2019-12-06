@@ -39,6 +39,33 @@ LinkedList* Initialisation(LinkedList* client) {
 }
 
 
+LinkedList* Initialisation_route(Voiture car, LinkedList* listecopy) {
+
+
+
+	SingleLinkedListElem* tmp;
+
+
+
+	for (int k = 0; k < listecopy->size; k++) {
+
+		tmp=GetElementAt(listecopy, k);
+
+		if (tmp->info.order.ID == 0) {
+
+			InsertElementAt(car.Route, 0, tmp->info);
+			DeleteLinkedListElem(listecopy, tmp);
+
+		}
+
+	}
+	
+
+	return(car.Route);
+
+}
+
+
 int main(){
 	
 	// je lis mon fichier et je cree mes 2 listes chainees
@@ -73,6 +100,9 @@ int main(){
 	taxi.Route = NewLinkedList();
 
 
+	taxi.Route = Initialisation_route(taxi, listechaineclient_copy);
+
+	afficherListe(taxi.Route);
 
 	system("pause");
 	return (0);
