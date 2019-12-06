@@ -14,9 +14,3 @@ LinkedList* clusterHeureDepart(Client listeclient[], Client test);
 
 //cluster capaciter
 LinkedList* clusterCapaciter(Client listeclient[], ElementListe test,int capa, int capMax);
-
-//cluster de distance
-LinkedList* clusterGeographique(ElementListe list[100], int client, int nbdemande, int dist);
-
-//calcule distance 
-float distance(Pos p1, Pos p2);

@@ -9,8 +9,30 @@
 
 
 
-// on compare toutes les distances, on ne retient que celles infï¿½rieures ï¿½ 5
+// on compare toutes les distances, on ne retient que celles inférieures à 5
 
+
+float distance(Pos p1, Pos p2) {
+
+	return(sqrt(pow((p1.X - p2.X), 2) + pow((p1.Y - p2.Y), 2)));
+
+}
+
+LinkedList* clustergeographique(ElementListe list[100] , ElementListe client, int nbdemande, int dist) {
+
+	LinkedList* cluster = NewLinkedList();
+	
+
+	for (int k = 0; k < nbdemande + 1; k++) {
+
+		if (distance(client.order.depart, list[k].order.depart) < dist) {
+			InsertElementAt(cluster, 0, list[k]);
+		}
+	}
+	printf("tous les clients proches a moins de %d metres du client %d sont :\n", dist, client.order.ID);
+	return(cluster);
+}
+	
 
 
 int main() {
@@ -23,7 +45,7 @@ int main() {
 	int index;
 	float abscisses;
 	float ordonnees;
-	int capacitï¿½;
+	int capacité;
 	int nbclient;
 	int tempsdepart;
 	int tempsarrivee;
@@ -31,7 +53,7 @@ int main() {
 
 
 
-	//on ouvre le fichier texte pour prï¿½lever tous les documents
+	//on ouvre le fichier texte pour prélever tous les documents
 	if (fichier != NULL)
 	{
 		int lire;
@@ -93,7 +115,7 @@ int main() {
 		}
 
 
-		fclose(fichier); // On ferme le fichier qui a ï¿½tï¿½ ouvert
+		fclose(fichier); // On ferme le fichier qui a été ouvert
 
 
 	}

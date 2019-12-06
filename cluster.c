@@ -90,9 +90,13 @@ LinkedList* clusterCapaciter(Client listeclient[], ElementListe test, int capaAc
 	return(listCluster);
 }
 
+float distance(Pos p1, Pos p2) {
 
+	return(sqrt(pow((p1.X - p2.X), 2) + pow((p1.Y - p2.Y), 2)));
 
-LinkedList* clusterGeographique(ElementListe list[100], ElementListe client, int nbdemande, int dist) {
+}
+
+LinkedList* clustergeographique(ElementListe list[100], ElementListe client, int nbdemande, int dist) {
 
 	LinkedList* cluster = NewLinkedList();
 
@@ -105,10 +109,4 @@ LinkedList* clusterGeographique(ElementListe list[100], ElementListe client, int
 	}
 	printf("tous les clients proches a moins de %d metres du client %d sont :\n", dist, client.order.ID);
 	return(cluster);
-}
-
-float distance(Pos p1, Pos p2) {
-
-	return(sqrt(pow((p1.X - p2.X), 2) + pow((p1.Y - p2.Y), 2)));
-
 }
