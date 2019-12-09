@@ -46,3 +46,9 @@ void afficherListe(LinkedList *liste);
 
 //inserer les element aleatoire pour initialiser la chaine
 LinkedList* InsertElementAleatoire(int aleatoire, ElementListe listeclient[100], LinkedList* route);
+
+//initialisation of LinkedList after the reading of the file.txt
+LinkedList* Initialisation(LinkedList* client);
+
+//creation of a copy of the linkedList whitch we will use to work on
+LinkedList* CopyList(LinkedList* client);
