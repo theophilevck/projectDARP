@@ -26,6 +26,7 @@ typedef struct voiture {
 	LinkedList* Route;
 }Voiture;
 
+
 // Crée une liste chaînée unilatère vide et renvoie un pointeur sur celle-ci
 LinkedList* NewLinkedList();
 
@@ -42,13 +43,19 @@ int InsertElementAt(LinkedList* liste, int i, ElementListe info);
 // Suppression et destruction d'un élément de liste chainée
 int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* Elem);
 
+//print thebLinkedList element after element
 void afficherListe(LinkedList *liste);
 
+//insertion of the depot in the LinkedList
+LinkedList* InsertDepot(LinkedList* client);
+
 //inserer les element aleatoire pour initialiser la chaine
-LinkedList* InsertElementAleatoire(int aleatoire, ElementListe listeclient[100], LinkedList* route);
+LinkedList* InsertElementAleatoire(int aleatoire, LinkedList* client, LinkedList* route);
 
 //initialisation of LinkedList after the reading of the file.txt
 LinkedList* Initialisation(LinkedList* client);
 
 //creation of a copy of the linkedList whitch we will use to work on
 LinkedList* CopyList(LinkedList* client);
+
+

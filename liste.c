@@ -5,7 +5,7 @@
 #include "liste.h"
 #include "Structures.h"
 
-// cr�e une nouvelle liste chain�e unilataire vide et renvoie un pointeur sur cette liste
+// crée une nouvelle liste chainée unilataire vide et renvoie un pointeur sur cette liste
 LinkedList* NewLinkedList() {
 	LinkedList* tmp;
 	tmp = (LinkedList*)malloc(sizeof(LinkedList));
@@ -16,7 +16,7 @@ LinkedList* NewLinkedList() {
 	}
 	return tmp;
 }
-// cr�e un nouveau maillon qui contient l info pass�e en param�tre
+// crée un nouveau maillon qui contient l info passée en paramètre
 SingleLinkedListElem* NewLinkedListElement(ElementListe info) {
 	SingleLinkedListElem* tmp;
 	tmp = (SingleLinkedListElem*)malloc(sizeof(SingleLinkedListElem));
@@ -26,7 +26,7 @@ SingleLinkedListElem* NewLinkedListElement(ElementListe info) {
 	}
 	return(tmp);
 }
-// renvoie un pointeur sur l'�l�ment en i�me position dans la liste
+// renvoie un pointeur sur l'élément en ième position dans la liste
 SingleLinkedListElem* GetElementAt(LinkedList* Liste, int i) {
 	int CurrentIndex = 0;
 	SingleLinkedListElem* Element;
@@ -41,36 +41,36 @@ SingleLinkedListElem* GetElementAt(LinkedList* Liste, int i) {
 	return(Element);
 }
 
-// Ajoute une nouvelle personne dans la liste cha�n�e en i�me position
-// Cette fonction fait appel � la fonction NewLinkedListElement(Enregistrement pers) pour cr�er un maillon
-int InsertElementAt(LinkedList* Liste, int i, ElementListe info) {
-	SingleLinkedListElem* CurrentElement, * NewElement;
+// Ajoute une nouvelle personne dans la liste chaînée en ième position
+// Cette fonction fait appel à la fonction NewLinkedListElement(Enregistrement pers) pour créer un maillon
+int InsertElementAt(LinkedList *Liste, int i, ElementListe info) {
+	SingleLinkedListElem *CurrentElement, *NewElement;
 	if (Liste == NULL) return(0);
-	// recherche de l'�l�ment qui se trouve d�j� en position i
+	// recherche de l'élément qui se trouve déjà en position i
 	CurrentElement = GetElementAt(Liste, i);
 	// s'il y en a un
 	if (CurrentElement != NULL) {
-		// on ins�re un nouvel �l�ment
+		// on insère un nouvel élément
 		NewElement = NewLinkedListElement(info);
-		// son suivant est alors l'�l�ment courant
+		// son suivant est alors l'élément courant
 		NewElement->next = CurrentElement;
 
 		if (i == 0) {
-			// si l'insertion est en t�te
-			// le nouvel �l�ment devient la t�te
+			// si l'insertion est en tête
+			// le nouvel élément devient la tête
 			Liste->head = NewElement;
 		}
 		else {
-			// sinon il faut r�tablir le chainage depuis l'�l�ment pr�c�dent
+			// sinon il faut rétablir le chainage depuis l'élément précédent
 			CurrentElement = GetElementAt(Liste, i - 1);
-			// le sucesseur du pr�c�dent devient le nouvel �l�ment
+			// le sucesseur du précédent devient le nouvel élément
 			CurrentElement->next = NewElement;
 		}
 		Liste->size++;
 		return(1);
 	}
 	else {
-		if (Liste->size == 0) { // insertion en t�te de l'unique �l�ment
+		if (Liste->size == 0) { // insertion en tête de l'unique élément
 			NewElement = NewLinkedListElement(info);
 			if (NewElement != NULL) {
 				Liste->head = NewElement;
@@ -104,9 +104,9 @@ int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
 	if (list == NULL) return(0); // La liste n'existe pas
 	if ((list->head == NULL) || (list->tail == NULL)) return(0); // liste vide ou anomalie
 	if ((list->head == list->tail) && (list->size != 1)) return(0); // anomalie
-	if ((list->size == 0) || (item == NULL)) return(0); // pas d'�l�ment dans la liste ou item invalide
+	if ((list->size == 0) || (item == NULL)) return(0); // pas d'élément dans la liste ou item invalide
 
-	// compl�ter code ici
+	// compléter code ici
 	SingleLinkedListElem* courant = NULL;
 	SingleLinkedListElem* effacer = NULL;
 	if (item == list->head) {
@@ -136,9 +136,8 @@ int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
 			courant = courant->next;
 		}
 		list->tail = courant;
-		effacer = courant->next;
-		courant->next = courant->next->next;
-		free(effacer);
+		courant = courant->next;
+		free(courant);
 		list->size--;
 		return(1);
 	}
@@ -158,13 +157,13 @@ int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
 	}
 }
 
-void afficherListe(LinkedList* liste)
+void afficherListe(LinkedList *liste)
 {
 	if (liste == NULL)
 	{
 		exit(EXIT_FAILURE);
 	}
-
+	
 	SingleLinkedListElem* courant = liste->head;
 
 	while (courant != NULL)
@@ -175,30 +174,59 @@ void afficherListe(LinkedList* liste)
 	printf("NULL\n");
 }
 
-LinkedList* InsertElementAleatoire(int aleatoire, ElementListe listeclient[100], LinkedList* route) {
+LinkedList* InsertDepot(LinkedList* client ){
+	LinkedList* route;
+	route = NewLinkedList();
+	SingleLinkedListElem* a;
+	a = client->head;
+	while (route->size<2) {
+		if (a->info.order.ID == 0) {
+			
+			if (route->size == 1) {
+				if (a->info.isDeparture == 1) {
+					InsertElementAt(route, 0, a->info);
+				}
+				else
+				{
+					InsertElementAt(route, 1, a->info);
+				}
+			}
+			else
+			{
+				InsertElementAt(route, 0, a->info);
+			}
+		}
+		a = a->next;
+	}
+	return(route);
+}
 
-	int id = listeclient[aleatoire].order.ID;
+
+LinkedList* InsertElementAleatoire(int aleatoire, LinkedList* client, LinkedList* route) {
+	SingleLinkedListElem* a;
+	a = GetElementAt(client, aleatoire);
+	int id = a->info.order.ID;
 	int i = 0;
-	if (route == NULL)
-	{
-		InsertElementAt(route, 0, listeclient[aleatoire]);
-		while (listeclient[aleatoire + i].order.ID != NULL) {
-			if (listeclient[aleatoire + i].order.ID == id) {
-				InsertElementAt(route, 1, listeclient[aleatoire + i]);
-			}
-			i++;
-		}
-	}
-	else {
-		InsertElementAt(route, 1, listeclient[aleatoire]);
-		while (listeclient[aleatoire + i].order.ID != NULL) {
-			if (listeclient[aleatoire + i].order.ID == id) {
-				InsertElementAt(route, 2, listeclient[aleatoire + i]);
-			}
-			i++;
-		}
-	}
+	
+		while (a->info.order.ID != NULL) {
+			if (a->info.order.ID == id) {
+				if (route->size %2== 0) {
+					InsertElementAt(route, 1, a->info);
+				}
+				else
+				{
 
+					if (a->info.isDeparture == 1) {
+						InsertElementAt(route, 1, a->info);
+					}
+					else
+					{
+						InsertElementAt(route, 2, a->info);
+					}
+				}
+			}
+			a = a->next;
+		}
 	return(route);
 }
 
@@ -212,7 +240,6 @@ LinkedList* Initialisation(LinkedList* client) {
 	for (int k = 0; k < client->size; k++) {
 
 		a = GetElementAt(client, k);
-		//a->info.isDeparture = true;
 		a->info.priseencharge.heure = 0;
 		a->info.priseencharge.minute = 0;
 		a->info.order.dureemax.heure = 0;
@@ -220,6 +247,7 @@ LinkedList* Initialisation(LinkedList* client) {
 		a->info.order.nbrpersonne = 1;
 		a->info.order.isTaken = true;
 
+		//a->info.isDeparture = true;
 		//InsertElementAt(listechaineclient_copy, k, a->info);
 
 		//a->info.isDeparture = false;
@@ -235,6 +263,7 @@ LinkedList* CopyList(LinkedList* client) {
 	SingleLinkedListElem* a;
 
 	for (int k = 0; k < client->size; k++) {
+		a = GetElementAt(client, k);
 		 a->info.isDeparture = true;
 		 InsertElementAt(listechaineclient_copy, k, a->info);
 		 a->info.isDeparture = false;
@@ -242,6 +271,7 @@ LinkedList* CopyList(LinkedList* client) {
 	}
 	return(listechaineclient_copy);
 }
+
 
 
 
