@@ -9,6 +9,12 @@
 #include "check.h"
 #include "Structures.h"
 #include "lecture.h"
+#include <stdbool.h>
+
+
+
+
+
 
 
 
@@ -23,11 +29,18 @@ int main(){
 
 	listechaineclient  =lecture_fichier("a4-40.txt");
 
-	afficherListe(listechaineclient);
+	//afficherListe(listechaineclient);
 
-	listechaineclient_copy = Initialisation(listechaineclient);
+	listechaineclient = Initialisation(listechaineclient);
+
+	listechaineclient_copy = CopyList(listechaineclient);
+
+	printf("j affiche la listecopie \n");
+
 
 	afficherListe(listechaineclient_copy);
+
+
 
 	// Je cree une voiture
 
@@ -46,9 +59,67 @@ int main(){
 	taxi.Route = NewLinkedList();
 
 
-	taxi.Route = Initialisation_route(taxi, listechaineclient_copy);
 
+
+
+
+	SingleLinkedListElem* tmp;
+
+	ElementListe Listeclient[100];
+	for (int i = 0; i < listechaineclient_copy->size; i++) {
+
+		tmp = GetElementAt(listechaineclient_copy, i);
+		Listeclient[i] = tmp->info;
+		
+	}
+
+	printf("ici j affiche la route initialisee \n");
+
+	taxi.Route = InsertDepot(listechaineclient_copy);
+	taxi.Route = InsertElementAleatoire(5, listechaineclient_copy, taxi.Route);
+	
 	afficherListe(taxi.Route);
+
+
+
+	
+	
+	LinkedList* clusteropt;
+	clusteropt = NewLinkedList();
+
+
+
+	clusteropt = IntersecCluster(listechaineclient_copy);
+	afficherListe(clusteropt);
+	/*
+	LinkedList* clusdep;
+	clusdep = NewLinkedList();
+
+	LinkedList* clusarriv;
+	clusarriv = NewLinkedList();
+
+	LinkedList* clusgeo;
+	clusgeo = NewLinkedList();
+
+	capa=clusterCapaciter(listechaineclient_copy, Listeclient[0], 0, 3);
+	clusdep = clusterHeureDepart(listechaineclient_copy, Listeclient[0]);
+	clusarriv = clusterHeureAriver(listechaineclient_copy, Listeclient[0]);
+	clusgeo = clusterGeographique(listechaineclient_copy, Listeclient[0],5);
+
+	printf("clustercapa du premier element \n");
+
+	afficherListe(capa);
+
+	printf("clusterheurededepart du premier element \n");
+	afficherListe(clusdep);
+
+	printf("clusterheurearrivee du premier element \n");
+	afficherListe(clusarriv);
+
+	printf("clustergeographique du premier element \n");
+	afficherListe(clusgeo);
+	*/
+
 
 	system("pause");
 	return (0);
