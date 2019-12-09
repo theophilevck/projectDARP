@@ -8,16 +8,16 @@
 #include "Structures.h"
 
 //cluster temp arriver
-LinkedList* clusterHeureAriver(ElementListe listeclient[], ElementListe test);
+LinkedList* clusterHeureAriver(LinkedList* listeclient, ElementListe test);
 
 //cluster temp depart
-LinkedList* clusterHeureDepart(ElementListe listeclient[], ElementListe test);
+LinkedList* clusterHeureDepart(LinkedList* listeclient, ElementListe test);
 
 //cluster capaciter
-LinkedList* clusterCapaciter(ElementListe listeclient[100], ElementListe test, int capaActuel, int capMax);
+LinkedList* clusterCapaciter(LinkedList* listeclient, ElementListe test, int capaActuel, int capMax);
 
 //cluster de distance
-LinkedList* clusterGeographique(ElementListe list[100], ElementListe client, int nbdemande, float dist);
+LinkedList* clusterGeographique(LinkedList* listeclient, ElementListe client, int nbdemande, float dist);
 
 //calcule distance 
 float distance(Pos p1, Pos p2);
