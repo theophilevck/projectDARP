@@ -26,7 +26,6 @@ typedef struct voiture {
 	LinkedList* Route;
 }Voiture;
 
-
 // Crée une liste chaînée unilatère vide et renvoie un pointeur sur celle-ci
 LinkedList* NewLinkedList();
 
@@ -58,4 +57,5 @@ LinkedList* Initialisation(LinkedList* client);
 //creation of a copy of the linkedList whitch we will use to work on
 LinkedList* CopyList(LinkedList* client);
 
-
+//delete the two element of the LinkedList
+LinkedList* DeletCopy(LinkedList* client, int id);
