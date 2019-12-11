@@ -290,26 +290,31 @@ LinkedList* DeletCopy(LinkedList* client, int id) {
 
 
 
-Time tempsparcours(ElementListe A, ElementListe B) {
-	
-	if (A.isDeparture == true) {
-	float dist = distance(A.order.depart, B.order.depart);
-	float temps = 0.25 * dist;
-	Time t;
-	t.heure = temps / 60;
-	t.minute = (int)temps % 60;
-	return(t);
+Time tempsparcours(SingleLinkedListElem* A, SingleLinkedListElem* B) {
+	Pos pos1;
+	Pos pos2;
+	float dist;
+	float temps;
+	if (A->info.isDeparture == true) {
+		pos1 = A->info.order.depart;
+	}
+	else
+	{
+		pos1 = A->info.order.arrivee;
+	}
+	if (B->info.isDeparture == true) {
+		pos2= B->info.order.depart;
 	}
 	else {
-		float dist = distance(A.order.arrivee, B.order.arrivee);
-		float temps = 0.25 * dist;
+		pos2 = B->info.order.arrivee;
+	
+	}
+	dist = distance(pos1, pos2);
+	temps = 0.25 * dist;
 		Time t;
 		t.heure = temps / 60;
 		t.minute = (int)temps % 60;
-		return(t);
-
-	}
-
+	return(t);
 }
 
 
