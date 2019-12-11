@@ -88,16 +88,18 @@ LinkedList* lecture_fichier(char name[]) {
 			printf("%f   ", listeclient[k].order.arrivee.X);
 			listeclient[k].order.arrivee.Y = ordonnees;
 			printf("%f   ", listeclient[k].order.arrivee.Y);
-			listeclient[k].order.nbrpersonne = nbclient;
-			printf("%d   ", listeclient[k].order.nbrpersonne);
+			//listeclient[k].order.nbrpersonne = nbclient;
+			printf("%d   ",(-1)* listeclient[k].order.nbrpersonne);
 			listeclient[k].order.intervallearrivee[0].heure = tempsdepart / 60;
 			printf("%d:", listeclient[k].order.intervallearrivee[0].heure);
 			listeclient[k].order.intervallearrivee[0].minute = tempsdepart % 60;
 			printf("%d   ", listeclient[k].order.intervallearrivee[0].minute);
 			listeclient[k].order.intervallearrivee[1].heure = tempsarrivee / 60;
 			printf("%d:", listeclient[k].order.intervallearrivee[1].heure);
+
 			listeclient[k].order.intervallearrivee[1].minute = tempsarrivee % 60;
-			printf("%d\n", listeclient[k].order.intervallearrivee[0].minute);
+
+			printf("%d\n", listeclient[k].order.intervallearrivee[1].minute);
 			InsertElementAt(listechaineclient, k, listeclient[k]);
 
 		}
@@ -122,7 +124,7 @@ LinkedList* lecture_fichier(char name[]) {
 		listeclient[0].order.intervallearrivee[1].heure = tempsarrivee / 60;
 		printf("%d:", listeclient[0].order.intervallearrivee[1].heure);
 		listeclient[0].order.intervallearrivee[1].minute = tempsarrivee % 60;
-		printf("%d\n", listeclient[0].order.intervallearrivee[0].minute);
+		printf("%d\n", listeclient[0].order.intervallearrivee[1].minute);
 
 
 		InsertElementAt(listechaineclient, 0, listeclient[0]);
