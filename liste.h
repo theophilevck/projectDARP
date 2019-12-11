@@ -59,3 +59,5 @@ LinkedList* InsertDepot(LinkedList* client);
 LinkedList* insertion(LinkedList* list, Voiture taxi);
 
 LinkedList* DeletCopy(LinkedList* client, int id);
+
+Time horloge_soustraction(Time a, int minutes);

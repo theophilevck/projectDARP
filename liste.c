@@ -317,60 +317,70 @@ Time tempsparcours(ElementListe A, ElementListe B) {
 
 
 
-
-
-
-
-
-
-
-LinkedList* insertion(LinkedList* list,Voiture taxi, SingleLinkedListElem* test, int capaciter) {
-	
-	LinkedList* cluster;
-	cluster = NewLinkedList();
-	cluster = IntersecClusters(list, test, capaciter);
-	int alea = aleatoire(list->size);
-	int capaactuelle=0;
-	float dist=0;
-
-
-
-	SingleLinkedListElem* tmp;
-	tmp = list->head;
-	tmp->info.depot.heure = 0;
-	tmp->info.depot.minute = 0;
-
-	//on calcule la distance 
-
-
-	if (cluster->size != 0) {
-		
-		tmp = GetElementAt(cluster, 0);
-
-
-
-
-		for (int k = 0; k < cluster->size; k++) {
-			tmp = GetElementAt(cluster, k);
-			tmp->info.isDeparture = true;
-			if ( CheckCapacity(taxi) == 1  && CheckDeparturTime(taxi) == 1 && CheckArivalTime(taxi) == 1) {
-
-				InsertElementAt( taxi.Route,1,tmp->info );
-				tmp->info.isDeparture = false;
-				InsertElementAt(taxi.Route, 1, tmp->info);
-
-
-			}
-
-		}
-
+Time horloge_soustraction(Time a, int minutes) {
+	int delta = a.minute - minutes;
+	if (delta < 0) {
+		a.heure = a.heure - 1;
+		a.minute = 60 + delta;
 	}
-	printf("ma route : \n");
-	afficherListe(taxi.Route);
-	return(taxi.Route);
-
+	else {
+		a.minute = a.minute - minutes;
+	}
+	return(a);
 }
 
+
+
+
+
+//
+//LinkedList* insertion(LinkedList* list,Voiture taxi, SingleLinkedListElem* test, int capaciter) {
+//	
+//	LinkedList* cluster;
+//	cluster = NewLinkedList();
+//	cluster = IntersecClusters(list, test, capaciter);
+//	int alea = aleatoire(list->size);
+//	int capaactuelle=0;
+//	float dist=0;
+//
+//
+//
+//	SingleLinkedListElem* tmp;
+//	tmp = list->head;
+//	tmp->info.depot.heure = 0;
+//	tmp->info.depot.minute = 0;
+//
+//	//on calcule la distance 
+//
+//
+//	if (cluster->size != 0) {
+//		
+//		tmp = GetElementAt(cluster, 0);
+//
+//
+//
+//
+//		for (int k = 0; k < cluster->size; k++) {
+//			tmp = GetElementAt(cluster, k);
+//			tmp->info.isDeparture = true;
+//			if ( CheckCapacity(taxi) == 1  && CheckDeparturTime(taxi) == 1 && CheckArivalTime(taxi) == 1) {
+//
+//				InsertElementAt( taxi.Route,1,tmp->info );
+//				tmp->info.isDeparture = false;
+//				InsertElementAt(taxi.Route, 1, tmp->info);
+//
+//
+//			}
+//
+//		}
+//
+//	}
+//	printf("ma route : \n");
+//	afficherListe(taxi.Route);
+//	return(taxi.Route);
+//
+//}
+//
 
 
 
