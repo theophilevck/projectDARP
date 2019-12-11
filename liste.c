@@ -330,7 +330,32 @@ Time horloge_soustraction(Time a, int minutes) {
 }
 
 
-
+Time tempsparcours(SingleLinkedListElem* A, SingleLinkedListElem* B) {
+	Pos pos1;
+	Pos pos2;
+	float dist;
+	float temps;
+	if (A->info.isDeparture == true) {
+		pos1 = A->info.order.depart;
+	}
+	else
+	{
+		pos1 = A->info.order.arrivee;
+	}
+	if (B->info.isDeparture == true) {
+		pos2= B->info.order.depart;
+	}
+	else {
+		pos2 = B->info.order.arrivee;
+	
+	}
+	dist = distance(pos1, pos2);
+	temps = 0.25 * dist;
+		Time t;
+		t.heure = temps / 60;
+		t.minute = (int)temps % 60;
+	return(t);
+}
 
 
 //

@@ -33,7 +33,7 @@ LinkedList* lecture_fichier(char name[]) {
 	ElementListe listeclient[100];
 
 	printf("coucou \n");
-	//on ouvre le fichier texte pour prélever toutes les informations
+	//on ouvre le fichier texte pour prï¿½lever toutes les informations
 	if (fichier != NULL)
 	{
 		int lire;
@@ -41,7 +41,7 @@ LinkedList* lecture_fichier(char name[]) {
 		printf("je suis dans le fichier\n");
 		printf("%d   %d   %d   %d   %d\n", nbdetaxi, nbdemande, dureetravail, capacite, dureemaxdemande);
 
-		// on créé une liste de voiture
+		// on crï¿½ï¿½ une liste de voiture
 
 
 
@@ -53,7 +53,7 @@ LinkedList* lecture_fichier(char name[]) {
 			int lecture1 = fscanf(fichier, "%d %f %f %d %d %d %d", &index, &abscisses, &ordonnees, &capacite, &nbclient, &tempsdepart,
 				&tempsarrivee);
 
-			// on initialise l'entrepot + 40 clients sur le départ
+			// on initialise l'entrepot + 40 clients sur le dï¿½part
 
 			listeclient[k].order.ID = index;
 			printf("%d     ", listeclient[k].order.ID);
@@ -81,7 +81,7 @@ LinkedList* lecture_fichier(char name[]) {
 				&tempsarrivee);
 
 
-			// on initialise les 40 clients sur l'arrivée + l'entrepot
+			// on initialise les 40 clients sur l'arrivï¿½e + l'entrepot
 
 			printf("%d     ", index);
 			listeclient[k].order.arrivee.X = abscisses;
@@ -108,7 +108,7 @@ LinkedList* lecture_fichier(char name[]) {
 			&tempsarrivee);
 
 
-		// on rajoute l'élément entrepot retour à la fin
+		// on rajoute l'ï¿½lï¿½ment entrepot retour ï¿½ la fin
 
 		printf("%d     ", index);
 		listeclient[0].order.arrivee.X = abscisses;
@@ -131,7 +131,7 @@ LinkedList* lecture_fichier(char name[]) {
 
 
 
-		fclose(fichier); // On ferme le fichier qui a été ouvert
+		fclose(fichier); // On ferme le fichier qui a ï¿½tï¿½ ouvert
 
 
 	}

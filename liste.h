@@ -25,20 +25,20 @@ typedef struct voiture {
 	LinkedList* Route;
 }Voiture;
 
-// Crée une liste chaînée unilatère vide et renvoie un pointeur sur celle-ci
+// Crï¿½e une liste chaï¿½nï¿½e unilatï¿½re vide et renvoie un pointeur sur celle-ci
 LinkedList* NewLinkedList();
 
-// Crée un nouveau maillon qui contient une nouvelle info et renvoie un pointeur sur ce maillon
+// Crï¿½e un nouveau maillon qui contient une nouvelle info et renvoie un pointeur sur ce maillon
 SingleLinkedListElem* NewLinkedListElement(ElementListe info);
 
-// Renvoie un pointeur sur le maillon qui se trouve en ième position à partir de 1
+// Renvoie un pointeur sur le maillon qui se trouve en iï¿½me position ï¿½ partir de 1
 SingleLinkedListElem* GetElementAt(LinkedList* liste, int i);
 
-// Ajoute une nouvelle personne dans la liste chaînée en ième position
-// Cette fonction fait appel à la fonction NewLinkedListElement(Enregistrement pers) pour créer un maillon
+// Ajoute une nouvelle personne dans la liste chaï¿½nï¿½e en iï¿½me position
+// Cette fonction fait appel ï¿½ la fonction NewLinkedListElement(Enregistrement pers) pour crï¿½er un maillon
 int InsertElementAt(LinkedList* liste, int i, ElementListe info);
 
-// Suppression et destruction d'un élément de liste chainée
+// Suppression et destruction d'un ï¿½lï¿½ment de liste chainï¿½e
 int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* Elem);
 
 void afficherListe(LinkedList* liste);
@@ -52,7 +52,7 @@ LinkedList* Initialisation(LinkedList* client);
 //creation of a copy of the linkedList whitch we will use to work on 
 LinkedList* CopyList(LinkedList* client);
 
-
+Time tempsparcours(SingleLinkedListElem* A, SingleLinkedListElem* B) ;
 
 LinkedList* InsertDepot(LinkedList* client);
 
