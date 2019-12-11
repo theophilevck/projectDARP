@@ -4,6 +4,8 @@
 #include <locale.h>
 #include "liste.h"
 #include "Structures.h"
+#include "check.h"
+#include "cluster.h"
 
 //create a new empty LinkedList
 LinkedList* NewLinkedList() {
@@ -290,31 +292,26 @@ LinkedList* DeletCopy(LinkedList* client, int id) {
 
 
 
-Time tempsparcours(SingleLinkedListElem* A, SingleLinkedListElem* B) {
-	Pos pos1;
-	Pos pos2;
-	float dist;
-	float temps;
-	if (A->info.isDeparture == true) {
-		pos1 = A->info.order.depart;
-	}
-	else
-	{
-		pos1 = A->info.order.arrivee;
-	}
-	if (B->info.isDeparture == true) {
-		pos2= B->info.order.depart;
+Time tempsparcours(ElementListe A, ElementListe B) {
+	
+	if (A.isDeparture == true) {
+	float dist = distance(A.order.depart, B.order.depart);
+	float temps = 0.25 * dist;
+	Time t;
+	t.heure = temps / 60;
+	t.minute = (int)temps % 60;
+	return(t);
 	}
 	else {
-		pos2 = B->info.order.arrivee;
-	
-	}
-	dist = distance(pos1, pos2);
-	temps = 0.25 * dist;
+		float dist = distance(A.order.arrivee, B.order.arrivee);
+		float temps = 0.25 * dist;
 		Time t;
 		t.heure = temps / 60;
 		t.minute = (int)temps % 60;
-	return(t);
+		return(t);
+
+	}
+
 }
 
 
@@ -327,52 +324,53 @@ Time tempsparcours(SingleLinkedListElem* A, SingleLinkedListElem* B) {
 
 
 
-//LinkedList* insertion(LinkedList* list,Voiture taxi) {
-//	
-//	LinkedList* cluster;
-//	cluster = NewLinkedList();
-//	cluster = IntersecCluster(list);
-//	int alea = aleatoire(list->size);
-//	int capaactuelle=0;
-//	float dist=0;
-//
-//
-//	SingleLinkedListElem* tmp;
-//	tmp = list->head;
-//	tmp->info.depot.heure = 0;
-//	tmp->info.depot.minute = 0;
-//
-//	//on calcule la distance 
-//
-//
-//	if (cluster->size != 0) {
-//		
-//		tmp = GetElementAt(cluster, 0);
-//
-//
-//
-//
-//		for (int k = 0; k < cluster->size; k++) {
-//			tmp = GetElementAt(cluster, k);
-//			tmp->info.isDeparture = true;
-//			if ( CheckCapacity(taxi) == 1  && CheckDeparturTime(taxi) == 1 && CheckArivalTime(taxi) == 1) {
-//
-//				InsertElementAt( taxi.Route,1,tmp->info );
-//				tmp->info.isDeparture = false;
-//				InsertElementAt(taxi.Route, 1, tmp->info);
-//
-//
-//			}
-//
-//		}
-//
-//	}
-//	printf("ma route : \n");
-//	afficherListe(taxi.Route);
-//	return(taxi.Route);
-//
-//}
-//
+LinkedList* insertion(LinkedList* list,Voiture taxi, SingleLinkedListElem* test, int capaciter) {
+	
+	LinkedList* cluster;
+	cluster = NewLinkedList();
+	cluster = IntersecClusters(list, test, capaciter);
+	int alea = aleatoire(list->size);
+	int capaactuelle=0;
+	float dist=0;
+
+
+
+	SingleLinkedListElem* tmp;
+	tmp = list->head;
+	tmp->info.depot.heure = 0;
+	tmp->info.depot.minute = 0;
+
+	//on calcule la distance 
+
+
+	if (cluster->size != 0) {
+		
+		tmp = GetElementAt(cluster, 0);
+
+
+
+
+		for (int k = 0; k < cluster->size; k++) {
+			tmp = GetElementAt(cluster, k);
+			tmp->info.isDeparture = true;
+			if ( CheckCapacity(taxi) == 1  && CheckDeparturTime(taxi) == 1 && CheckArivalTime(taxi) == 1) {
+
+				InsertElementAt( taxi.Route,1,tmp->info );
+				tmp->info.isDeparture = false;
+				InsertElementAt(taxi.Route, 1, tmp->info);
+
+
+			}
+
+		}
+
+	}
+	printf("ma route : \n");
+	afficherListe(taxi.Route);
+	return(taxi.Route);
+
+}
+
 
 
 
