@@ -42,8 +42,8 @@ SingleLinkedListElem* GetElementAt(LinkedList* Liste, int i) {
 }
 
 //add a new element in the LinkedList at the position chosen
-int InsertElementAt(LinkedList *Liste, int i, ElementListe info) {
-	SingleLinkedListElem *CurrentElement, *NewElement;
+int InsertElementAt(LinkedList* Liste, int i, ElementListe info) {
+	SingleLinkedListElem* CurrentElement, * NewElement;
 	if (Liste == NULL) return(0);
 	CurrentElement = GetElementAt(Liste, i);
 	if (CurrentElement != NULL) {
@@ -61,7 +61,7 @@ int InsertElementAt(LinkedList *Liste, int i, ElementListe info) {
 		return(1);
 	}
 	else {
-		if (Liste->size == 0) { 
+		if (Liste->size == 0) {
 			NewElement = NewLinkedListElement(info);
 			if (NewElement != NULL) {
 				Liste->head = NewElement;
@@ -73,7 +73,7 @@ int InsertElementAt(LinkedList *Liste, int i, ElementListe info) {
 				return(0);
 			}
 		}
-		if (Liste->size <= i) { 
+		if (Liste->size <= i) {
 			NewElement = NewLinkedListElement(info);
 			if (NewElement != NULL) {
 				Liste->tail->next = NewElement;
@@ -91,15 +91,15 @@ int InsertElementAt(LinkedList *Liste, int i, ElementListe info) {
 
 
 int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
-	if (list == NULL) return(0); 
+	if (list == NULL) return(0);
 	if ((list->head == NULL) || (list->tail == NULL)) return(0);
 	if ((list->head == list->tail) && (list->size != 1)) return(0);
-	if ((list->size == 0) || (item == NULL)) return(0); 
+	if ((list->size == 0) || (item == NULL)) return(0);
 
 	SingleLinkedListElem* courant = NULL;
 	SingleLinkedListElem* effacer = NULL;
 	if (item == list->head) {
-	
+
 		courant = list->head;
 		list->head = courant->next;
 		if (list->size == 1) {
@@ -111,7 +111,7 @@ int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
 		return(1);
 	}
 	if (item == list->tail) {
-		
+
 		courant = list->head;
 		while (courant->next != item) {
 			courant = courant->next;
@@ -138,7 +138,7 @@ int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
 	}
 }
 
-void afficherListe(LinkedList *liste)
+void afficherListe(LinkedList* liste)
 {
 	if (liste == NULL)
 	{
@@ -147,22 +147,22 @@ void afficherListe(LinkedList *liste)
 	SingleLinkedListElem* courant = liste->head;
 	while (courant != NULL)
 	{
-//		if (courant->info.isDeparture == true) {
-			printf("%d -> ", courant->info.order.ID);
-//		}
+		//		if (courant->info.isDeparture == true) {
+		printf("%d -> ", courant->info.order.ID);
+		//		}
 		courant = courant->next;
 	}
 	printf("NULL\n");
 }
 
-LinkedList* InsertDepot(LinkedList* client ){
+LinkedList* InsertDepot(LinkedList* client) {
 	LinkedList* route;
 	route = NewLinkedList();
 	SingleLinkedListElem* a;
 	a = client->head;
-	while (route->size<2) {
+	while (route->size < 2) {
 		if (a->info.order.ID == 0) {
-			
+
 			if (route->size == 1) {
 				if (a->info.isDeparture == 1) {
 					InsertElementAt(route, 0, a->info);
@@ -177,8 +177,8 @@ LinkedList* InsertDepot(LinkedList* client ){
 				InsertElementAt(route, 0, a->info);
 			}
 		}
-			a = a->next;
-		
+		a = a->next;
+
 	}
 	return(route);
 }
@@ -189,32 +189,32 @@ LinkedList* InsertElementAleatoire(int aleatoire, LinkedList* client, LinkedList
 	a = GetElementAt(client, aleatoire);
 	int id = a->info.order.ID;
 	int i = 0;
-	
-		while (a != client->tail) {
-			if (a->info.order.ID == id) {
-				if (route->size %2== 0) {
+
+	while (a != client->tail) {
+		if (a->info.order.ID == id) {
+			if (route->size % 2 == 0) {
+				InsertElementAt(route, 1, a->info);
+				a = a->next;
+			}
+			else
+			{
+				if (a->info.isDeparture == 1) {
 					InsertElementAt(route, 1, a->info);
 					a = a->next;
+					DeletCopy(client, id);
 				}
 				else
 				{
-					if (a->info.isDeparture == 1) {
-						InsertElementAt(route, 1, a->info);
-						a = a->next;
-						DeletCopy(client, id);
-					}
-					else
-					{
-						InsertElementAt(route, 2, a->info);
-						a = a->next;
-						DeletCopy(client, id);
-					}
+					InsertElementAt(route, 2, a->info);
+					a = a->next;
+					DeletCopy(client, id);
 				}
 			}
-			else {
-				a = a->next;
-			}
 		}
+		else {
+			a = a->next;
+		}
+	}
 	return(route);
 }
 
@@ -252,10 +252,10 @@ LinkedList* CopyList(LinkedList* client) {
 
 	for (int k = 0; k < client->size; k++) {
 		a = GetElementAt(client, k);
-		 a->info.isDeparture = true;
-		 InsertElementAt(listechaineclient_copy, k, a->info);
-		 a->info.isDeparture = false;
-		 InsertElementAt(listechaineclient_copy, k, a->info);
+		a->info.isDeparture = true;
+		InsertElementAt(listechaineclient_copy, k, a->info);
+		a->info.isDeparture = false;
+		InsertElementAt(listechaineclient_copy, k, a->info);
 	}
 	return(listechaineclient_copy);
 }
@@ -264,11 +264,11 @@ LinkedList* DeletCopy(LinkedList* client, int id) {
 	SingleLinkedListElem* a;
 	int count = 0;
 	a = client->head;
-	
+
 	while (a != client->tail) {
 		if (a->info.order.ID == id) {
 			count = count + 1;
-			
+
 			DeleteLinkedListElem(client, a);
 			afficherListe(client);
 			a = client->head;
@@ -287,6 +287,108 @@ LinkedList* DeletCopy(LinkedList* client, int id) {
 	}
 	return(client);
 }
+
+
+
+Time tempsparcours(ElementListe A, ElementListe B) {
+	
+	if (A.isDeparture == true) {
+	float dist = distance(A.order.depart, B.order.depart);
+	float temps = 0.25 * dist;
+	Time t;
+	t.heure = temps / 60;
+	t.minute = (int)temps % 60;
+	return(t);
+	}
+	else {
+		float dist = distance(A.order.arrivee, B.order.arrivee);
+		float temps = 0.25 * dist;
+		Time t;
+		t.heure = temps / 60;
+		t.minute = (int)temps % 60;
+		return(t);
+
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+//LinkedList* insertion(LinkedList* list,Voiture taxi) {
+//	
+//	LinkedList* cluster;
+//	cluster = NewLinkedList();
+//	cluster = IntersecCluster(list);
+//	int alea = aleatoire(list->size);
+//	int capaactuelle=0;
+//	float dist=0;
+//
+//
+//	SingleLinkedListElem* tmp;
+//	tmp = list->head;
+//	tmp->info.depot.heure = 0;
+//	tmp->info.depot.minute = 0;
+//
+//	//on calcule la distance 
+//
+//
+//	if (cluster->size != 0) {
+//		
+//		tmp = GetElementAt(cluster, 0);
+//
+//
+//
+//
+//		for (int k = 0; k < cluster->size; k++) {
+//			tmp = GetElementAt(cluster, k);
+//			tmp->info.isDeparture = true;
+//			if ( CheckCapacity(taxi) == 1  && CheckDeparturTime(taxi) == 1 && CheckArivalTime(taxi) == 1) {
+//
+//				InsertElementAt( taxi.Route,1,tmp->info );
+//				tmp->info.isDeparture = false;
+//				InsertElementAt(taxi.Route, 1, tmp->info);
+//
+//
+//			}
+//
+//		}
+//
+//	}
+//	printf("ma route : \n");
+//	afficherListe(taxi.Route);
+//	return(taxi.Route);
+//
+//}
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
