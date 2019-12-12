@@ -19,8 +19,7 @@ LinkedList* clusterCapaciter(LinkedList* listeclient, ElementListe test, int cap
 //cluster de distance
 LinkedList* clusterGeographique(LinkedList* listeclient, ElementListe client, float dist);
 
-//calcule distance 
-float distance(Pos p1, Pos p2);
+
 
 //aleatoire
 int aleatoire(int max,int min);

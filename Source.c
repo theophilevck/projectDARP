@@ -3,122 +3,149 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <time.h>
 #include "liste.h"
-#include "cluster.h"
 #include "check.h"
-#include "Structures.h"
-#include "lecture.h"
-#include <stdbool.h>
+#define TAILLE_MAX 1000 // Tableau de taille 1000
 
 
 
+// on compare toutes les distances, on ne retient que celles inférieures à 5
 
 
+float distance(Pos p1, Pos p2) {
 
+	return(sqrt(pow((p1.X - p2.X), 2) + pow((p1.Y - p2.Y), 2)));
 
+}
 
-int main(){
+LinkedList* clustergeographique(ElementListe list[100] , ElementListe client, int nbdemande, int dist) {
+
+	LinkedList* cluster = NewLinkedList();
 	
-	// je lis mon fichier et je cree mes 2 listes chainees
 
-	LinkedList* listechaineclient;
-	LinkedList* listechaineclient_copy;
-	listechaineclient = NewLinkedList();
-	listechaineclient_copy = NewLinkedList();
+	for (int k = 0; k < nbdemande + 1; k++) {
 
-	listechaineclient  =lecture_fichier("a4-40.txt");
-
-	//afficherListe(listechaineclient);
-
-	listechaineclient = Initialisation(listechaineclient);
-
-	listechaineclient_copy = CopyList(listechaineclient);
-
-	printf("j affiche la listecopie \n");
+		if (distance(client.order.depart, list[k].order.depart) < dist) {
+			InsertElementAt(cluster, 0, list[k]);
+		}
+	}
+	printf("tous les clients proches a moins de %d metres du client %d sont :\n", dist, client.order.ID);
+	return(cluster);
+}
+	
 
 
-	afficherListe(listechaineclient_copy);
+int main() {
 
+	FILE* fichier = NULL;
 
-
-	// Je cree une voiture
-
-	Voiture taxi;
-	taxi.Id = 1;
-	taxi.Cn = 5;
-	taxi.depot.nbVoiture = 4;
-	taxi.depot.position.X = 0;
-	taxi.depot.position.Y = 0;
-	taxi.dtravaille.heure = 10;
-	taxi.dtravaille.minute = 0;
-	taxi.Edepart.heure = 0;
-	taxi.Edepart.minute = 0;
-	taxi.Earrivee.heure = 24;
-	taxi.Earrivee.minute = 0;
-	taxi.Route = NewLinkedList();
+	fichier = fopen("a4-40.txt", "r");
+	int nbdetaxi, nbdemande, dureetravail, capacite, dureemaxdemande;
+	printf("coucou \n");
+	int index;
+	float abscisses;
+	float ordonnees;
+	int capacité;
+	int nbclient;
+	int tempsdepart;
+	int tempsarrivee;
+	ElementListe listeclient[100];
 
 
 
+	//on ouvre le fichier texte pour prélever tous les documents
+	if (fichier != NULL)
+	{
+		int lire;
+		lire = fscanf(fichier, "%d %d %d %d %d", &nbdetaxi, &nbdemande, &dureetravail, &capacite, &dureemaxdemande);
+		printf("je suis dans le fichier\n");
+		printf("%d\n", nbdetaxi);
 
 
 
-	SingleLinkedListElem* tmp;
 
-	ElementListe Listeclient[100];
-	for (int i = 0; i < listechaineclient_copy->size; i++) {
 
-		tmp = GetElementAt(listechaineclient_copy, i);
-		Listeclient[i] = tmp->info;
-		
+		for (int k = 0; k < nbdemande + 1; k++) { 
+
+			
+			int lecture1 = fscanf(fichier, "%d %f %f %d %d %d %d", &index, &abscisses, &ordonnees, &capacite, &nbclient, &tempsdepart,
+				&tempsarrivee);
+
+
+
+			listeclient[k].order.ID = index;
+			printf("%d     ", listeclient[k].order.ID);
+			listeclient[k].order.depart.X = abscisses;
+			printf("%f   ", listeclient[k].order.depart.X);
+			listeclient[k].order.depart.Y = ordonnees;
+			printf("%f   ", listeclient[k].order.depart.Y);
+			listeclient[k].order.nbrpersonne = nbclient;
+			printf("%d   ", listeclient[k].order.nbrpersonne);
+			listeclient[k].order.intevalledepart[0].heure = tempsdepart / 60;
+			printf("%d:", listeclient[k].order.intevalledepart[0].heure);
+			listeclient[k].order.intevalledepart[0].minute = tempsdepart % 60;
+			printf("%d   ", listeclient[k].order.intevalledepart[0].minute);
+			listeclient[k].order.intevalledepart[1].heure = tempsarrivee / 60;
+			printf("%d:", listeclient[k].order.intevalledepart[1].heure);
+			listeclient[k].order.intevalledepart[1].minute = tempsarrivee % 60;
+			printf("%d\n", listeclient[k].order.intevalledepart[0].minute);
+		}
+
+		for (int k = 1; k <  nbdemande + 1; k++) { 
+
+			int lecture2 = fscanf(fichier, "%d %f %f %d %d %d %d", &index, &abscisses, &ordonnees, &capacite, &nbclient, &tempsdepart,
+				&tempsarrivee);
+
+			printf("%d     ", index);
+			listeclient[k].order.arrivee.X = abscisses;
+			printf("%f   ", listeclient[k].order.arrivee.X);
+			listeclient[k].order.arrivee.Y = ordonnees;
+			printf("%f   ", listeclient[k].order.arrivee.Y);
+			listeclient[k].order.nbrpersonne = nbclient;
+			printf("%d   ", listeclient[k].order.nbrpersonne);
+			listeclient[k].order.intervallearrivee[0].heure = tempsdepart / 60;
+			printf("%d:", listeclient[k].order.intervallearrivee[0].heure);
+			listeclient[k].order.intervallearrivee[0].minute = tempsdepart % 60;
+			printf("%d   ", listeclient[k].order.intervallearrivee[0].minute);
+			listeclient[k].order.intervallearrivee[1].heure = tempsarrivee / 60;
+			printf("%d:", listeclient[k].order.intervallearrivee[1].heure);
+			listeclient[k].order.intervallearrivee[1].minute = tempsarrivee % 60;
+			printf("%d\n", listeclient[k].order.intervallearrivee[0].minute);
+
+		}
+
+
+		fclose(fichier); // On ferme le fichier qui a été ouvert
+
+
 	}
 
-	printf("ici j affiche la route initialisee \n");
-
-	taxi.Route = InsertDepot(listechaineclient_copy);
-	taxi.Route = InsertElementAleatoire(5, listechaineclient_copy, taxi.Route);
 	
-	afficherListe(taxi.Route);
 
 
 
 	
-	
-	LinkedList* clusteropt;
-	clusteropt = NewLinkedList();
+	//on parcourt toutes les lignes pour connaitre chaque cluster
+	// on doit inclure le code du cluster ici:
 
 
 
-	clusteropt = IntersecCluster(listechaineclient_copy);
-	afficherListe(clusteropt);
-	/*
-	LinkedList* clusdep;
-	clusdep = NewLinkedList();
 
-	LinkedList* clusarriv;
-	clusarriv = NewLinkedList();
+	LinkedList* tmp;
+	tmp=clustergeographique(listeclient, listeclient[1], nbdemande,5);
 
-	LinkedList* clusgeo;
-	clusgeo = NewLinkedList();
+	afficherListe(tmp);
 
-	capa=clusterCapaciter(listechaineclient_copy, Listeclient[0], 0, 3);
-	clusdep = clusterHeureDepart(listechaineclient_copy, Listeclient[0]);
-	clusarriv = clusterHeureAriver(listechaineclient_copy, Listeclient[0]);
-	clusgeo = clusterGeographique(listechaineclient_copy, Listeclient[0],5);
 
-	printf("clustercapa du premier element \n");
 
-	afficherListe(capa);
 
-	printf("clusterheurededepart du premier element \n");
-	afficherListe(clusdep);
 
-	printf("clusterheurearrivee du premier element \n");
-	afficherListe(clusarriv);
 
-	printf("clustergeographique du premier element \n");
-	afficherListe(clusgeo);
-	*/
+
+
+
+
+
 
 
 	system("pause");
@@ -127,12 +154,6 @@ int main(){
 
 
 }
-
-
-
-
-
-
 
 
 

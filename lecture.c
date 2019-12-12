@@ -1,5 +1,5 @@
-#define _CRT_SECURE_NO_WARNINGS
-
+﻿#define _CRT_SECURE_NO_WARNINGS
+#pragma once
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -33,7 +33,7 @@ LinkedList* lecture_fichier(char name[]) {
 	ElementListe listeclient[100];
 
 	printf("coucou \n");
-	//on ouvre le fichier texte pour pr�lever toutes les informations
+	//on ouvre le fichier texte pour prelever toutes les informations
 	if (fichier != NULL)
 	{
 		int lire;
@@ -41,7 +41,7 @@ LinkedList* lecture_fichier(char name[]) {
 		printf("je suis dans le fichier\n");
 		printf("%d   %d   %d   %d   %d\n", nbdetaxi, nbdemande, dureetravail, capacite, dureemaxdemande);
 
-		// on cr�� une liste de voiture
+		// on cree une liste de voiture
 
 
 
@@ -53,7 +53,7 @@ LinkedList* lecture_fichier(char name[]) {
 			int lecture1 = fscanf(fichier, "%d %f %f %d %d %d %d", &index, &abscisses, &ordonnees, &capacite, &nbclient, &tempsdepart,
 				&tempsarrivee);
 
-			// on initialise l'entrepot + 40 clients sur le d�part
+			// on initialise l'entrepot + 40 clients sur le depart
 
 			listeclient[k].order.ID = index;
 			printf("%d     ", listeclient[k].order.ID);
@@ -70,7 +70,7 @@ LinkedList* lecture_fichier(char name[]) {
 			listeclient[k].order.intevalledepart[1].heure = tempsarrivee / 60;
 			printf("%d:", listeclient[k].order.intevalledepart[1].heure);
 			listeclient[k].order.intevalledepart[1].minute = tempsarrivee % 60;
-			printf("%d\n", listeclient[k].order.intevalledepart[0].minute);
+			printf("%d\n", listeclient[k].order.intevalledepart[1].minute);
 
 
 		}
@@ -81,7 +81,7 @@ LinkedList* lecture_fichier(char name[]) {
 				&tempsarrivee);
 
 
-			// on initialise les 40 clients sur l'arriv�e + l'entrepot
+			// on initialise les 40 clients sur l'arrivee + l'entrepot
 
 			printf("%d     ", index);
 			listeclient[k].order.arrivee.X = abscisses;
@@ -89,7 +89,7 @@ LinkedList* lecture_fichier(char name[]) {
 			listeclient[k].order.arrivee.Y = ordonnees;
 			printf("%f   ", listeclient[k].order.arrivee.Y);
 			//listeclient[k].order.nbrpersonne = nbclient;
-			printf("%d   ",(-1)* listeclient[k].order.nbrpersonne);
+			printf("%d   ", (-1)* listeclient[k].order.nbrpersonne);
 			listeclient[k].order.intervallearrivee[0].heure = tempsdepart / 60;
 			printf("%d:", listeclient[k].order.intervallearrivee[0].heure);
 			listeclient[k].order.intervallearrivee[0].minute = tempsdepart % 60;
@@ -108,7 +108,7 @@ LinkedList* lecture_fichier(char name[]) {
 			&tempsarrivee);
 
 
-		// on rajoute l'�l�ment entrepot retour � la fin
+		// on rajoute l'element entrepot retour a la fin
 
 		printf("%d     ", index);
 		listeclient[0].order.arrivee.X = abscisses;
@@ -131,7 +131,7 @@ LinkedList* lecture_fichier(char name[]) {
 
 
 
-		fclose(fichier); // On ferme le fichier qui a �t� ouvert
+		fclose(fichier); // On ferme le fichier qui a ete ouvert
 
 
 	}
@@ -139,3 +139,4 @@ LinkedList* lecture_fichier(char name[]) {
 	return(listechaineclient);
 
 }
+

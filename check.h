@@ -24,3 +24,6 @@ bool est_sup (Time time1, Time time2);
 
 //test si le premier est inferieur au deuxieme
 bool est_inf (Time time1, Time time2);
+
+
+int CheckInsertion(SingleLinkedListElem* InsertionAfter, SingleLinkedListElem* ElementTest);

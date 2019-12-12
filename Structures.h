@@ -8,7 +8,6 @@
 
 
 
-
 typedef struct position {
 	float X;
 	float Y;

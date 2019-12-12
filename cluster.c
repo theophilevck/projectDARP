@@ -144,13 +144,7 @@ LinkedList* clusterGeographique(LinkedList* listeclient, ElementListe client, fl
 
 
 
-float distance(Pos p1, Pos p2) {
-	float tampon1;
-	float tampon2;
-	tampon1 = (powf((p1.X - p2.X), 2) + powf((p1.Y - p2.Y), 2));
-	tampon2 = sqrtf(tampon1);
-	return(tampon2);
-}
+
 
 int aleatoire(int max, int min) {
 		int valeur = (rand() * (max - min) / RAND_MAX);

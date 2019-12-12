@@ -142,3 +142,18 @@ bool est_inf(Time time1, Time time2)
 	}
 	return(false);
 }
+
+int CheckInsertion( SingleLinkedListElem* InsertionAfter, SingleLinkedListElem* ElementTest) {//chesk  si le temps d arriver a l elementtest est bon en verifiant que le temps de prise en carge de l element InsertionAfter
+	Time tampon;
+
+	tampon=tempsparcours(ElementTest, InsertionAfter);
+	tampon.heure = tampon.heure +  ElementTest->info.priseencharge.heure;
+	tampon.minute = tampon.minute + ElementTest->info.priseencharge.minute;
+	if (!(est_inf(tampon, InsertionAfter->info.priseencharge))){
+		return(0);
+	}
+
+
+
+
+}

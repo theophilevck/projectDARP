@@ -1,11 +1,11 @@
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #include <locale.h>
+#include <math.h>
 #include "liste.h"
 #include "Structures.h"
-#include "check.h"
-#include "cluster.h"
 
 //create a new empty LinkedList
 LinkedList* NewLinkedList() {
@@ -44,8 +44,8 @@ SingleLinkedListElem* GetElementAt(LinkedList* Liste, int i) {
 }
 
 //add a new element in the LinkedList at the position chosen
-int InsertElementAt(LinkedList* Liste, int i, ElementListe info) {
-	SingleLinkedListElem* CurrentElement, * NewElement;
+int InsertElementAt(LinkedList *Liste, int i, ElementListe info) {
+	SingleLinkedListElem *CurrentElement, *NewElement;
 	if (Liste == NULL) return(0);
 	CurrentElement = GetElementAt(Liste, i);
 	if (CurrentElement != NULL) {
@@ -63,7 +63,7 @@ int InsertElementAt(LinkedList* Liste, int i, ElementListe info) {
 		return(1);
 	}
 	else {
-		if (Liste->size == 0) {
+		if (Liste->size == 0) { 
 			NewElement = NewLinkedListElement(info);
 			if (NewElement != NULL) {
 				Liste->head = NewElement;
@@ -75,7 +75,7 @@ int InsertElementAt(LinkedList* Liste, int i, ElementListe info) {
 				return(0);
 			}
 		}
-		if (Liste->size <= i) {
+		if (Liste->size <= i) { 
 			NewElement = NewLinkedListElement(info);
 			if (NewElement != NULL) {
 				Liste->tail->next = NewElement;
@@ -93,15 +93,15 @@ int InsertElementAt(LinkedList* Liste, int i, ElementListe info) {
 
 
 int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
-	if (list == NULL) return(0);
+	if (list == NULL) return(0); 
 	if ((list->head == NULL) || (list->tail == NULL)) return(0);
 	if ((list->head == list->tail) && (list->size != 1)) return(0);
-	if ((list->size == 0) || (item == NULL)) return(0);
+	if ((list->size == 0) || (item == NULL)) return(0); 
 
 	SingleLinkedListElem* courant = NULL;
 	SingleLinkedListElem* effacer = NULL;
 	if (item == list->head) {
-
+	
 		courant = list->head;
 		list->head = courant->next;
 		if (list->size == 1) {
@@ -113,7 +113,7 @@ int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
 		return(1);
 	}
 	if (item == list->tail) {
-
+		
 		courant = list->head;
 		while (courant->next != item) {
 			courant = courant->next;
@@ -140,7 +140,7 @@ int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* item) {
 	}
 }
 
-void afficherListe(LinkedList* liste)
+void afficherListe(LinkedList *liste)
 {
 	if (liste == NULL)
 	{
@@ -149,22 +149,22 @@ void afficherListe(LinkedList* liste)
 	SingleLinkedListElem* courant = liste->head;
 	while (courant != NULL)
 	{
-		//		if (courant->info.isDeparture == true) {
-		printf("%d -> ", courant->info.order.ID);
-		//		}
+//		if (courant->info.isDeparture == true) {
+			printf("%d -> ", courant->info.order.ID);
+//		}
 		courant = courant->next;
 	}
 	printf("NULL\n");
 }
 
-LinkedList* InsertDepot(LinkedList* client) {
+LinkedList* InsertDepot(LinkedList* client ){
 	LinkedList* route;
 	route = NewLinkedList();
 	SingleLinkedListElem* a;
 	a = client->head;
-	while (route->size < 2) {
+	while (route->size<2) {
 		if (a->info.order.ID == 0) {
-
+			
 			if (route->size == 1) {
 				if (a->info.isDeparture == 1) {
 					InsertElementAt(route, 0, a->info);
@@ -179,8 +179,8 @@ LinkedList* InsertDepot(LinkedList* client) {
 				InsertElementAt(route, 0, a->info);
 			}
 		}
-		a = a->next;
-
+			a = a->next;
+		
 	}
 	return(route);
 }
@@ -191,32 +191,34 @@ LinkedList* InsertElementAleatoire(int aleatoire, LinkedList* client, LinkedList
 	a = GetElementAt(client, aleatoire);
 	int id = a->info.order.ID;
 	int i = 0;
-
-	while (a != client->tail) {
-		if (a->info.order.ID == id) {
-			if (route->size % 2 == 0) {
-				InsertElementAt(route, 1, a->info);
-				a = a->next;
-			}
-			else
-			{
-				if (a->info.isDeparture == 1) {
+	
+		while (a != client->tail) {
+			if (a->info.order.ID == id) {
+				if (route->size %2== 0) {
 					InsertElementAt(route, 1, a->info);
 					a = a->next;
-					DeletCopy(client, id);
 				}
 				else
 				{
-					InsertElementAt(route, 2, a->info);
-					a = a->next;
-					DeletCopy(client, id);
+					if (a->info.isDeparture == 1) {
+						InsertElementAt(route, 1, a->info);
+						a = a->next;
+						DeletCopy(client, id);
+					}
+					else
+					{
+						InsertElementAt(route, 2, a->info);
+						a = a->next;
+						DeletCopy(client, id);
+					}
 				}
 			}
+			else {
+				a = a->next;
+			}
 		}
-		else {
-			a = a->next;
-		}
-	}
+
+
 	return(route);
 }
 
@@ -254,10 +256,10 @@ LinkedList* CopyList(LinkedList* client) {
 
 	for (int k = 0; k < client->size; k++) {
 		a = GetElementAt(client, k);
-		a->info.isDeparture = true;
-		InsertElementAt(listechaineclient_copy, k, a->info);
-		a->info.isDeparture = false;
-		InsertElementAt(listechaineclient_copy, k, a->info);
+		 a->info.isDeparture = true;
+		 InsertElementAt(listechaineclient_copy, k, a->info);
+		 a->info.isDeparture = false;
+		 InsertElementAt(listechaineclient_copy, k, a->info);
 	}
 	return(listechaineclient_copy);
 }
@@ -266,11 +268,11 @@ LinkedList* DeletCopy(LinkedList* client, int id) {
 	SingleLinkedListElem* a;
 	int count = 0;
 	a = client->head;
-
+	
 	while (a != client->tail) {
 		if (a->info.order.ID == id) {
 			count = count + 1;
-
+			
 			DeleteLinkedListElem(client, a);
 			afficherListe(client);
 			a = client->head;
@@ -291,45 +293,6 @@ LinkedList* DeletCopy(LinkedList* client, int id) {
 }
 
 
-
-Time tempsparcours(ElementListe A, ElementListe B) {
-	
-	if (A.isDeparture == true) {
-	float dist = distance(A.order.depart, B.order.depart);
-	float temps = 0.25 * dist;
-	Time t;
-	t.heure = temps / 60;
-	t.minute = (int)temps % 60;
-	return(t);
-	}
-	else {
-		float dist = distance(A.order.arrivee, B.order.arrivee);
-		float temps = 0.25 * dist;
-		Time t;
-		t.heure = temps / 60;
-		t.minute = (int)temps % 60;
-		return(t);
-
-	}
-
-}
-
-
-
-
-Time horloge_soustraction(Time a, int minutes) {
-	int delta = a.minute - minutes;
-	if (delta < 0) {
-		a.heure = a.heure - 1;
-		a.minute = 60 + delta;
-	}
-	else {
-		a.minute = a.minute - minutes;
-	}
-	return(a);
-}
-
-
 Time tempsparcours(SingleLinkedListElem* A, SingleLinkedListElem* B) {
 	Pos pos1;
 	Pos pos2;
@@ -347,82 +310,120 @@ Time tempsparcours(SingleLinkedListElem* A, SingleLinkedListElem* B) {
 	}
 	else {
 		pos2 = B->info.order.arrivee;
-	
 	}
 	dist = distance(pos1, pos2);
-	temps = 0.25 * dist;
+	temps = 0.5 * dist;
 		Time t;
+		t.heure = 0;
 		t.heure = temps / 60;
+		t.minute = 0;
 		t.minute = (int)temps % 60;
 	return(t);
 }
 
 
-//
-//LinkedList* insertion(LinkedList* list,Voiture taxi, SingleLinkedListElem* test, int capaciter) {
-//	
-//	LinkedList* cluster;
-//	cluster = NewLinkedList();
-//	cluster = IntersecClusters(list, test, capaciter);
-//	int alea = aleatoire(list->size);
-//	int capaactuelle=0;
-//	float dist=0;
-//
-//
-//
-//	SingleLinkedListElem* tmp;
-//	tmp = list->head;
-//	tmp->info.depot.heure = 0;
-//	tmp->info.depot.minute = 0;
-//
-//	//on calcule la distance 
-//
-//
-//	if (cluster->size != 0) {
-//		
-//		tmp = GetElementAt(cluster, 0);
-//
-//
-//
-//
-//		for (int k = 0; k < cluster->size; k++) {
-//			tmp = GetElementAt(cluster, k);
-//			tmp->info.isDeparture = true;
-//			if ( CheckCapacity(taxi) == 1  && CheckDeparturTime(taxi) == 1 && CheckArivalTime(taxi) == 1) {
-//
-//				InsertElementAt( taxi.Route,1,tmp->info );
-//				tmp->info.isDeparture = false;
-//				InsertElementAt(taxi.Route, 1, tmp->info);
-//
-//
-//			}
-//
-//		}
-//
+LinkedList* InitFirstElement(LinkedList* client) {
+	SingleLinkedListElem* first;
+	SingleLinkedListElem* last;
+	SingleLinkedListElem* current;
+	SingleLinkedListElem* currentNext;
+
+	first = client->head;
+	last = client->tail;
+	current = client->head;
+	current = current->next;
+	currentNext= current->next;
+
+	currentNext->info.depot.heure = (currentNext->info.order.intervallearrivee[0].heure + currentNext->info.order.intervallearrivee[1].heure)/2;
+	currentNext->info.depot.minute = (currentNext->info.order.intervallearrivee[0].minute + currentNext->info.order.intervallearrivee[1].minute)/2;
+
+	currentNext->info.priseencharge = horloge_soustraction( currentNext->info.depot,tempsparcours(currentNext, current).minute);
+
+	current->info.depot = currentNext->info.depot;
+	current->info.priseencharge = currentNext->info.priseencharge;
+
+	last->info.depot.heure = currentNext->info.depot.heure + tempsparcours(currentNext, last).heure;
+	
+	last->info.depot.minute = currentNext->info.depot.minute + tempsparcours(currentNext, last).minute;
+	first->info.depot = last->info.depot;
+	first->info.priseencharge = horloge_soustraction(currentNext->info.priseencharge, tempsparcours(first, current).minute);
+	
+	last->info.priseencharge = first->info.priseencharge;
+
+	/*printf("\n %d:%d et %d:%d \n", currentNext->info.depot.heure, currentNext->info.depot.minute, currentNext->info.priseencharge.heure, currentNext->info.priseencharge.minute);
+	printf("\n %d:%d et %d:%d \n", current->info.depot.heure, current->info.depot.minute, current->info.priseencharge.heure, current->info.priseencharge.minute);
+	printf("\n %d:%d et %d:%d \n", first->info.depot.heure, first->info.depot.minute, first->info.priseencharge.heure, first->info.priseencharge.minute);
+	printf("\n %d:%d et %d:%d \n", last->info.depot.heure, last->info.depot.minute, last->info.priseencharge.heure, last->info.priseencharge.minute);*/
+	return(client);
+}
+
+
+Time horloge_soustraction(Time a, int minutes) {
+	int delta = a.minute - minutes;
+	if (delta < 0) {
+		a.heure = a.heure - 1;
+		a.minute = 60 + delta;
+	}
+	else {
+		a.minute = a.minute - minutes;
+	}
+	return(a);
+}
+
+
+
+float distance(Pos p1, Pos p2) {
+	float tampon1;
+	float tampon2;
+	tampon1 = (powf((p1.X - p2.X), 2) + powf((p1.Y - p2.Y), 2));
+	tampon2 = sqrtf(tampon1);
+	return(tampon2);
+}
+
+//int InsertGoodSpot(LinkedList* copy, LinkedList* rout, LinkedList* IntersecClusters,int random) {
+//	SingleLinkedListElem* courant;
+//	SingleLinkedListElem* newCourant;
+//	int count = 0;
+//	int tampon = 0;
+//	int test = 0;
+//	courant = rout->head;
+//	while (courant != random) {
+//		courant = courant->next;
 //	}
-//	printf("ma route : \n");
-//	afficherListe(taxi.Route);
-//	return(taxi.Route);
+//	tampon= aleatoire(rout->size/2, 0);
+//	newCourant=getElement(IntersecClusters, tampon);
+//	while (test != 0) {
+//		//while (fonction check != true) {
+//		delecopy(newCourant->info.order.ID, IntersecClusters);
+//		tampon = aleatoire(rout->size / 2, 0);
+//		getElement(IntersecClusters, tampon);
 //
-//}
 //
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//		//}
+//	}
+//
+//	/*
+//	appele d un aleatoire tampon;/
+//	getElement(IntersecClusters,tampon)/
+//	while(test!=0){/
+//	while(fonction check!=true){
+//		appele d un aleatoire tampon;
+//		getElement(IntersecClusters,tampon)
+//		delecopy(,IntersecClusters)
+//		if(IntersecClusters.size==0){
+//		return(0)//erreur!!!
+//		}
+//	}
+//	while(fonction check!=true ){
+//		
+//	if(newCourant==rout.tail){
+//		return(0)//erreur!!!
+//		}
+//	}
+//	}
+//
+//	
+//	*/
 
 
 
