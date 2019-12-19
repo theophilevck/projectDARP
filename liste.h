@@ -7,6 +7,7 @@
 #include "structures.h"
 
 
+
 typedef struct SingleLinkedListElem {
     ElementListe info;
 	struct SingleLinkedListElem *next;
@@ -27,6 +28,9 @@ typedef struct voiture {
 	Time dtravaille;
 	LinkedList* Route;
 }Voiture;
+
+//Create a car
+Voiture NewCar(int Id, int Cn, Depot depot);
 
 // Crée une liste chaînée unilatère vide et renvoie un pointeur sur celle-ci
 LinkedList* NewLinkedList();
@@ -51,6 +55,10 @@ void afficherListeHeure(LinkedList *liste);
 
 void afficherListeIstaken(LinkedList *liste);
 
+void afficherListePosition(LinkedList *liste);
+
+void afficherListHeure(LinkedList *liste);
+
 //insertion of the depot in the LinkedList
 LinkedList* InsertDepot(LinkedList* client);
 
@@ -66,14 +74,7 @@ LinkedList* CopyList(LinkedList* client);
 //delete the two element of the LinkedList
 LinkedList* DeletCopy(LinkedList* client, int id);
 
-//calculate the Time between two diferent point
-Time tempsparcours(SingleLinkedListElem* A, SingleLinkedListElem* B);
-
-//substract hours
-Time horloge_soustraction(Time a, int minutes);
-
 int InsertGoodSpot(LinkedList* copy, LinkedList* rout, LinkedList* IntersecClusters, int aleatoire);
-
 
 //intialise the time of pick up of the first two element
 LinkedList* InitFirstElement(LinkedList* client);
@@ -81,11 +82,32 @@ LinkedList* InitFirstElement(LinkedList* client);
 //intialise the time of pick up of the first two element
 LinkedList* InitOtherElement(LinkedList* client);
 
+int CheckinsertionFirstElement(SingleLinkedListElem* current, SingleLinkedListElem* insertion);
+
+int CheckinsertionSecondElement(SingleLinkedListElem* current, SingleLinkedListElem* insertion);
+
+int InsertLeftOver(LinkedList* copy, LinkedList* rout);
+
 //calcule distance 
 float distance(Pos p1, Pos p2);
 
 Time Horloge_addition(Time a, Time b);
 
-int CheckinsertionFirstElement(SingleLinkedListElem* current, SingleLinkedListElem* insertion);
+//substract hours
+Time horloge_soustraction(Time a, int minutes);
 
-int CheckinsertionSecondElement(SingleLinkedListElem* current, SingleLinkedListElem* insertion);
+//calculate the Time between two diferent point
+Time tempsparcours(SingleLinkedListElem* A, SingleLinkedListElem* B);
+
+Time CalculeTimeItin(LinkedList* copy);
+
+int CheckinsertionFirstElement1(LinkedList* route, SingleLinkedListElem* cournat, SingleLinkedListElem* insertion);
+
+int CheckinsertionSecondElement1(LinkedList* route, SingleLinkedListElem* cournat, SingleLinkedListElem* insertion);
+
+int CheckinsertionFirstElement2(LinkedList* route, SingleLinkedListElem* cournat, SingleLinkedListElem* insertion);
+
+int CheckinsertionSecondElement2(LinkedList* route, SingleLinkedListElem* cournat, SingleLinkedListElem* insertion);
+
+LinkedList* InitList( LinkedList* copy);
+

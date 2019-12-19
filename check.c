@@ -111,7 +111,7 @@ int CheckWorckTime (Voiture car){
 
 bool est_sup(Time time1, Time time2)
 {
-	if (time1.heure >= time2.heure) {
+	if (time1.heure > time2.heure) {
 		return(true);
 	}
 	if (time1.heure == time2.heure) {
@@ -128,7 +128,7 @@ bool est_sup(Time time1, Time time2)
 
 bool est_inf(Time time1, Time time2)
 {
-	if (time1.heure <= time2.heure) {
+	if (time1.heure < time2.heure) {
 		return(true);
 	}
 	if (time1.heure == time2.heure) {
@@ -152,8 +152,35 @@ int CheckInsertion( SingleLinkedListElem* InsertionAfter, SingleLinkedListElem* 
 	if (!(est_inf(tampon, InsertionAfter->info.priseencharge))){
 		return(0);
 	}
+}
 
+int CheckTime(LinkedList* route) {
+	Time time1;
+	Time time2;
+	SingleLinkedListElem* curent;
+	SingleLinkedListElem* currentPrevious;
+	currentPrevious = route->head;
+	curent = currentPrevious->next;
 
-
-
+	while (curent != route->tail) {
+		if (curent->info.isDeparture == true) {
+			time1 = curent->info.priseencharge;
+		}
+		else {
+			time1 = curent->info.depot;
+		}
+		if (currentPrevious->info.isDeparture == true) {
+			time2 = currentPrevious->info.priseencharge;
+		}
+		else {
+			time2 = currentPrevious->info.depot;
+		}
+			
+		if (est_inf(time1, time2)) {
+			return(0);
+		}
+		currentPrevious = currentPrevious->next;
+		curent = currentPrevious->next;
+	}
+	return(1);
 }

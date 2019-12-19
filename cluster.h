@@ -6,6 +6,7 @@
 #include <math.h>
 #include "liste.h"
 #include "Structures.h"
+#include "Calcul.h"
 
 //cluster temp arriver
 LinkedList* clusterHeureAriver(LinkedList* listeclient, ElementListe test);
@@ -18,8 +19,6 @@ LinkedList* clusterCapaciter(LinkedList* listeclient, ElementListe test, int cap
 
 //cluster de distance
 LinkedList* clusterGeographique(LinkedList* listeclient, ElementListe client, float dist);
-
-
 
 //aleatoire
 int aleatoire(int max,int min);
