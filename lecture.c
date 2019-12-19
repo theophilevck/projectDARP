@@ -23,7 +23,7 @@ LinkedList* lecture_fichier(char name[]) {
 
 	fichier = fopen(name, "r");
 	int nbdetaxi, nbdemande, dureetravail, capacite, dureemaxdemande;
-	printf("on lit le fichier \n");
+	//printf("on lit le fichier \n");
 	int index;
 	float abscisses;
 	float ordonnees;
@@ -32,7 +32,6 @@ LinkedList* lecture_fichier(char name[]) {
 	int tempsarrivee;
 	ElementListe listeclient[100];
 
-	printf("coucou \n");
 	//on ouvre le fichier texte pour prelever toutes les informations
 	if (fichier != NULL)
 	{

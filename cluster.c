@@ -147,6 +147,7 @@ LinkedList* clusterGeographique(LinkedList* listeclient, ElementListe client, fl
 
 
 int aleatoire(int max, int min) {
+		
 		int valeur = (rand() * (max - min) / RAND_MAX);
 		 return valeur;
 }
@@ -212,18 +213,18 @@ LinkedList* IntersecClusters(LinkedList* list, SingleLinkedListElem* tmp,int cap
 	LinkedList* tampon3 = NewLinkedList();
 	LinkedList* Intersec = NewLinkedList();
 	
-	printf("clustercapa \n");
+	//printf("clustercapa \n");
 	tampon = clusterCapaciter(list, tmp->info, capaciter, 4);
-	afficherListe(tampon);
-	printf("clustergeo \n");
+	//afficherListe(tampon);
+	//printf("clustergeo \n");
 	tampon1 = clusterGeographique(list, tmp->info, 5);
-	afficherListe(tampon1);
-	printf("clusterheurearriv \n");
+	//afficherListe(tampon1);
+	//printf("clusterheurearriv \n");
 	tampon2 = clusterHeureAriver(list, tmp->info);
-	afficherListe(tampon2);
-	printf("clusterheuredepart \n");
+	//afficherListe(tampon2);
+	//printf("clusterheuredepart \n");
 	tampon3 = clusterHeureDepart(list, tmp->info);
-	afficherListe(tampon3);
+	//afficherListe(tampon3);
 	tmp = list->head;
 	while (tmp != list->tail)
 	{
@@ -235,6 +236,51 @@ LinkedList* IntersecClusters(LinkedList* list, SingleLinkedListElem* tmp,int cap
 	if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 4) {
 		InsertElementAt(Intersec, 0, tmp->info);
 		
+	}
+	if (Intersec->size == 0) {
+		tmp = list->head;
+		while (tmp != list->tail)
+		{
+			if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 3) {
+				InsertElementAt(Intersec, 0, tmp->info);
+			}
+			tmp = tmp->next;
+		}
+		if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 3) {
+			InsertElementAt(Intersec, 0, tmp->info);
+
+		}
+
+	}
+	if (Intersec->size == 0) {
+		tmp = list->head;
+		while (tmp != list->tail)
+		{
+			if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 2) {
+				InsertElementAt(Intersec, 0, tmp->info);
+			}
+			tmp = tmp->next;
+		}
+		if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 2) {
+			InsertElementAt(Intersec, 0, tmp->info);
+
+		}
+
+	}
+	if (Intersec->size == 0) {
+		tmp = list->head;
+		while (tmp != list->tail)
+		{
+			if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 1) {
+				InsertElementAt(Intersec, 0, tmp->info);
+			}
+			tmp = tmp->next;
+		}
+		if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 1) {
+			InsertElementAt(Intersec, 0, tmp->info);
+
+		}
+
 	}
 	return(Intersec);
 }
