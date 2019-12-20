@@ -10,13 +10,13 @@
 
 typedef struct SingleLinkedListElem {
     ElementListe info;
-	struct SingleLinkedListElem *next;
+	struct SingleLinkedListElem *next;//pointeur qui fait refernce a l elemnen qui suis dans la liste chainee
 } SingleLinkedListElem;
 
 typedef struct LinkedList {
-	SingleLinkedListElem *head;
-	SingleLinkedListElem *tail;
-	int size;
+	SingleLinkedListElem *head;//premier element de la liste chainee
+	SingleLinkedListElem *tail;//dernier element de la liste chainee
+	int size;//taille de la liste chainee
 } LinkedList;
 
 typedef struct voiture {
@@ -29,85 +29,83 @@ typedef struct voiture {
 	LinkedList* Route;
 }Voiture;
 
-//Create a car
+//Cree une voiture
 Voiture NewCar(int Id, int Cn, Depot depot);
 
-// Crée une liste chaînée unilatère vide et renvoie un pointeur sur celle-ci
+// Cree une liste chaînee unilatere vide et renvoie un pointeur sur celle-ci
 LinkedList* NewLinkedList();
 
-// Crée un nouveau maillon qui contient une nouvelle info et renvoie un pointeur sur ce maillon
+// Cree un nouveau maillon qui contient une nouvelle info et renvoie un pointeur sur ce maillon
 SingleLinkedListElem* NewLinkedListElement(ElementListe info);
 
-// Renvoie un pointeur sur le maillon qui se trouve en ième position à partir de 1
+// Renvoie un pointeur sur le maillon qui se trouve en ieme position a partir de 1
 SingleLinkedListElem* GetElementAt(LinkedList* liste, int i);
 
-// Ajoute une nouvelle personne dans la liste chaînée en ième position
-// Cette fonction fait appel à la fonction NewLinkedListElement(Enregistrement pers) pour créer un maillon
+// Ajoute un nouvelle elemnt dans la liste chaînee en ieme position
 int InsertElementAt(LinkedList* liste, int i, ElementListe info);
 
-// Suppression et destruction d'un élément de liste chainée
+// Suppression et destruction d'un element de liste chainee
 int DeleteLinkedListElem(LinkedList* list, SingleLinkedListElem* Elem);
 
-//print thebLinkedList element after element
+//affiche la liste element par element
 void afficherListe(LinkedList *liste);
 
-void afficherListeHeure(LinkedList *liste);
-
+//affiche la liste element par element en specifiant si l element est un depart(1) ou une arriver(0)
 void afficherListeIstaken(LinkedList *liste);
 
+//affiche la liste element par element en specifiant la position du point ou l on se trouve
 void afficherListePosition(LinkedList *liste);
 
+//affiche la liste element par element en specifiant l heure a laquelle on se trouve a cette element
 void afficherListHeure(LinkedList *liste);
 
-//insertion of the depot in the LinkedList
+//insertion des depot pour initialiser la route
 LinkedList* InsertDepot(LinkedList* client);
 
-//inserer les element aleatoire pour initialiser la chaine
+//inserer les element aleatoire pour initialiser la chaine et cree 
 LinkedList* InsertElementAleatoire(int aleatoire, LinkedList* client, LinkedList* route);
 
-//initialisation of LinkedList after the reading of the file.txt
+//initialisation de la LinkedList apres avoir lu le fichier file.txt
 LinkedList* Initialisation(LinkedList* client);
 
-//creation of a copy of the linkedList whitch we will use to work on
+//creation d une copy de la liste de client, on passe de n client a 2n+2 client au totale
 LinkedList* CopyList(LinkedList* client);
 
-//delete the two element of the LinkedList
+//suprime les element qui on l id entrer dans la liste chainee
 LinkedList* DeletCopy(LinkedList* client, int id);
 
+//fonction qui insere et intilaise certaine valeur des elemnt
 int InsertGoodSpot(LinkedList* copy, LinkedList* rout, LinkedList* IntersecClusters, int aleatoire);
 
-//intialise the time of pick up of the first two element
+//intialisation du premier client et des depot qui sont dans la liste chainee
 LinkedList* InitFirstElement(LinkedList* client);
 
-//intialise the time of pick up of the first two element
-LinkedList* InitOtherElement(LinkedList* client);
-
-int CheckinsertionFirstElement(SingleLinkedListElem* current, SingleLinkedListElem* insertion);
-
-int CheckinsertionSecondElement(SingleLinkedListElem* current, SingleLinkedListElem* insertion);
-
+//fonction qui essaye d insere les element qui non pas pu etre inserer avant
 int InsertLeftOver(LinkedList* copy, LinkedList* rout);
 
 //calcule distance 
 float distance(Pos p1, Pos p2);
 
+//fonction qui permet de faire l addition de variable de temps
 Time Horloge_addition(Time a, Time b);
 
-//substract hours
+//fonction qui permet de faire la sustraction de variable de temps
 Time horloge_soustraction(Time a, int minutes);
 
-//calculate the Time between two diferent point
+//calcule 
 Time tempsparcours(SingleLinkedListElem* A, SingleLinkedListElem* B);
 
 Time CalculeTimeItin(LinkedList* copy);
 
-int CheckinsertionFirstElement1(LinkedList* route, SingleLinkedListElem* cournat, SingleLinkedListElem* insertion);
-
-int CheckinsertionSecondElement1(LinkedList* route, SingleLinkedListElem* cournat, SingleLinkedListElem* insertion);
-
+//fonction qui teste si on peux insere les deux element qui constitue un client
 int CheckinsertionFirstElement2(LinkedList* route, SingleLinkedListElem* cournat, SingleLinkedListElem* insertion);
 
+//fonction qui teste ou on peux insere l element retour d un client
 int CheckinsertionSecondElement2(LinkedList* route, SingleLinkedListElem* cournat, SingleLinkedListElem* insertion);
 
+//fonction qui initialise la liste avec le depot et le premier client
 LinkedList* InitList( LinkedList* copy);
+
+//fonction qui parcour la liste chainee et qui rensseigne la capaciter a chaque maillont
+LinkedList* InitCapa(LinkedList* route);
 

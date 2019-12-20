@@ -7,8 +7,8 @@
 #include "check.h"
 
 
-int CheckCapacity (Voiture car){
-	 SingleLinkedListElem* CurrentElement=car.Route->head;
+int CheckCapacity (LinkedList* route,int capa){
+	 SingleLinkedListElem* CurrentElement= route->head;
     while (CurrentElement !=NULL)
     {
         if (CurrentElement->info.isDeparture==true){
@@ -17,10 +17,10 @@ int CheckCapacity (Voiture car){
         else{
 			CurrentElement->info.capaciter = CurrentElement->info.capaciter - CurrentElement->info.order.nbrpersonne;
         }
-        if (car.Cn< CurrentElement->info.capaciter){
+        if (capa < CurrentElement->info.capaciter){
             return(0);//capaciter depasser
         }
-		if (CurrentElement == car.Route->tail) {
+		if (CurrentElement == route->tail) {
 			return(1);
 
 		}
@@ -50,14 +50,14 @@ int CheckDeparturBeforeArival (Voiture car,SingleLinkedListElem* arret){
     }
 }    
 
-int CheckDeparturTime (Voiture car){
+int CheckDeparturTime (LinkedList* route) {
     int i=0;
     Time timeMax;
     Time timeMin;
-	SingleLinkedListElem* CurrentElement = car.Route->head;
+	SingleLinkedListElem* CurrentElement = route->head;
 	CurrentElement = CurrentElement->next;
 
-    while (CurrentElement!=car.Route->tail)
+    while (CurrentElement!= route->tail)
     {
         timeMax=CurrentElement->info.order.intevalledepart[1];
         timeMin=CurrentElement->info.order.intevalledepart[0];
@@ -72,14 +72,14 @@ int CheckDeparturTime (Voiture car){
     return(1);
 }
 
-int CheckArivalTime (Voiture car){
+int CheckArivalTime (LinkedList* route){
     int i=0;
     Time timeMax;
     Time timeMin;
-	SingleLinkedListElem* CurrentElement = car.Route->head;
+	SingleLinkedListElem* CurrentElement = route->head;
 	CurrentElement = CurrentElement->next;
 
-    while (CurrentElement!= car.Route->tail)
+    while (CurrentElement!= route->tail)
     {
         timeMax=CurrentElement->info.order.intervallearrivee[1];
         timeMin=CurrentElement->info.order.intervallearrivee[0];
@@ -132,7 +132,7 @@ bool est_inf(Time time1, Time time2)
 		return(true);
 	}
 	if (time1.heure == time2.heure) {
-		if (time1.minute <= time2.minute) {
+		if (time1.minute < time2.minute) {
 			return(true);
 		}
 		else
@@ -141,17 +141,6 @@ bool est_inf(Time time1, Time time2)
 		}
 	}
 	return(false);
-}
-
-int CheckInsertion( SingleLinkedListElem* InsertionAfter, SingleLinkedListElem* ElementTest) {//chesk  si le temps d arriver a l elementtest est bon en verifiant que le temps de prise en carge de l element InsertionAfter
-	Time tampon;
-
-	tampon=tempsparcours(ElementTest, InsertionAfter);
-	tampon.heure = tampon.heure +  ElementTest->info.priseencharge.heure;
-	tampon.minute = tampon.minute + ElementTest->info.priseencharge.minute;
-	if (!(est_inf(tampon, InsertionAfter->info.priseencharge))){
-		return(0);
-	}
 }
 
 int CheckTime(LinkedList* route) {

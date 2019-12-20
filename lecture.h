@@ -7,5 +7,4 @@
 #include "Structures.h"
 
 
-
 LinkedList* lecture_fichier(char name[]);

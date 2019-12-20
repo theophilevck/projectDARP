@@ -6,7 +6,6 @@
 #include <math.h>
 #include "liste.h"
 #include "Structures.h"
-#include "Calcul.h"
 
 //cluster temp arriver
 LinkedList* clusterHeureAriver(LinkedList* listeclient, ElementListe test);
@@ -23,10 +22,10 @@ LinkedList* clusterGeographique(LinkedList* listeclient, ElementListe client, fl
 //aleatoire
 int aleatoire(int max,int min);
 
-//crete the intersection of each cluster
-LinkedList* IntersecClusters(LinkedList* list, SingleLinkedListElem* tmp, int capaciter);
+//cre l interssection de chaque client 
+LinkedList* IntersecClusters(LinkedList* list, SingleLinkedListElem* tmp);
 
-//call in interescClusters to count each element
+//fonction qui compte le nombre de fois ou chaque client est present dans les cluster
 int nbrePresenceClusters(SingleLinkedListElem* tmp, LinkedList* c1, LinkedList* c2, LinkedList* c3, LinkedList* c4);
 
 

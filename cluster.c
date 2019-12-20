@@ -9,7 +9,6 @@
 #include "cluster.h"
 
 
-
 LinkedList* clusterHeureAriver(LinkedList* listeclient, ElementListe test) {
 	Time intevallecluster[2];
 	LinkedList* listCluster = NewLinkedList();
@@ -142,10 +141,6 @@ LinkedList* clusterGeographique(LinkedList* listeclient, ElementListe client, fl
 	return(cluster);
 }
 
-
-
-
-
 int aleatoire(int max, int min) {
 		
 		int valeur = (rand() * (max - min) / RAND_MAX);
@@ -155,56 +150,68 @@ int aleatoire(int max, int min) {
 int nbrePresenceClusters(SingleLinkedListElem* tmp, LinkedList* c1, LinkedList* c2, LinkedList* c3, LinkedList* c4) {
 	int compteur = 0;
 	SingleLinkedListElem* a;
-	if (c1->size > 1) {
-	a = c1->head;
-	a = a->next;
-	while (a != NULL)
-	{
-			if ((a->info.order.ID == tmp->info.order.ID) && (a->info.isDeparture == tmp->info.isDeparture)) {
+	if (c1 != NULL) {
+		if (c1->size > 1) {
+			a = c1->head;
+			a = a->next;
+			while (a != NULL)
+			{
+				if ((a->info.order.ID == tmp->info.order.ID) && (a->info.isDeparture == tmp->info.isDeparture)) {
 
-			compteur++;
-			
-		}
-		a = a->next;
-	}
-}
-	if (c2->size > 1) {
-		a = c2->head;
-		a = a->next;
-		while (a != NULL)
-		{
-			if ((a->info.order.ID == tmp->info.order.ID) && (a->info.isDeparture == tmp->info.isDeparture)) {
-				compteur++;
+					compteur++;
+
+				}
+				a = a->next;
 			}
-			a = a->next;
 		}
 	}
-	if (c3->size > 1) {
-		a = c3->head;
-		a = a->next;
-		while (a != NULL)
-		{
-			if ((a->info.order.ID == tmp->info.order.ID) && (a->info.isDeparture == tmp->info.isDeparture)) {
-				compteur++;
+
+	if (c2 != NULL) {
+		if (c2->size > 1) {
+			a = c2->head;
+			a = a->next;
+			while (a != NULL)
+			{
+				if ((a->info.order.ID == tmp->info.order.ID) && (a->info.isDeparture == tmp->info.isDeparture)) {
+					compteur++;
+				}
+				a = a->next;
 			}
-			a = a->next;
 		}
 	}
-	if (c4->size > 1) {
-		a = c4->head;
-		a = a->next;
-		while (a != NULL)
-		{
-			if ((a->info.order.ID == tmp->info.order.ID) && (a->info.isDeparture == tmp->info.isDeparture)) {
-				compteur++;
+	
+	if (c3 != NULL) {
+		if (c3->size > 1) {
+			a = c3->head;
+			a = a->next;
+			while (a != NULL)
+			{
+				if ((a->info.order.ID == tmp->info.order.ID) && (a->info.isDeparture == tmp->info.isDeparture)) {
+					compteur++;
+				}
+				a = a->next;
 			}
-			a = a->next;
 		}
 	}
+	
+	if (c4 != NULL) {
+		if (c4->size > 1) {
+			a = c4->head;
+			a = a->next;
+			while (a != NULL)
+			{
+				if ((a->info.order.ID == tmp->info.order.ID) && (a->info.isDeparture == tmp->info.isDeparture)) {
+					compteur++;
+				}
+				a = a->next;
+			}
+		}
+	}
+	
 	return(compteur);
 }
 
-LinkedList* IntersecClusters(LinkedList* list, SingleLinkedListElem* tmp,int capaciter) {
+LinkedList* IntersecClusters(LinkedList* list, SingleLinkedListElem* tmp) {
 
 	int compteur = 0;
 	LinkedList* tampon = NewLinkedList();
@@ -213,18 +220,17 @@ LinkedList* IntersecClusters(LinkedList* list, SingleLinkedListElem* tmp,int cap
 	LinkedList* tampon3 = NewLinkedList();
 	LinkedList* Intersec = NewLinkedList();
 	
-	//printf("clustercapa \n");
-	tampon = clusterCapaciter(list, tmp->info, capaciter, 4);
-	//afficherListe(tampon);
-	//printf("clustergeo \n");
+	//cretaion des diferent cluster pour l element donnee
+	tampon = clusterCapaciter(list, tmp->info, tmp->info.capaciter, 4);
+
 	tampon1 = clusterGeographique(list, tmp->info, 5);
-	//afficherListe(tampon1);
-	//printf("clusterheurearriv \n");
+
 	tampon2 = clusterHeureAriver(list, tmp->info);
-	//afficherListe(tampon2);
-	//printf("clusterheuredepart \n");
+
 	tampon3 = clusterHeureDepart(list, tmp->info);
-	//afficherListe(tampon3);
+	//fin creation cluter
+
+	//on ajoute les element qui sont present dans les 4 cluster a la liste
 	tmp = list->head;
 	while (tmp != list->tail)
 	{
@@ -237,50 +243,57 @@ LinkedList* IntersecClusters(LinkedList* list, SingleLinkedListElem* tmp,int cap
 		InsertElementAt(Intersec, 0, tmp->info);
 		
 	}
-	if (Intersec->size == 0) {
-		tmp = list->head;
-		while (tmp != list->tail)
-		{
+
+	//si aucun n element n es ajoute on recomence le proceder 
+	//mais avec on ajoute les elemnt qui sont present dans au moins 3 cluster
+	if (Intersec != NULL) {
+		if (Intersec->size == 0) {
+			tmp = list->head;
+			while (tmp != list->tail)
+			{
+				if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 3) {
+					InsertElementAt(Intersec, 0, tmp->info);
+				}
+				tmp = tmp->next;
+			}
 			if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 3) {
 				InsertElementAt(Intersec, 0, tmp->info);
+
 			}
-			tmp = tmp->next;
-		}
-		if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 3) {
-			InsertElementAt(Intersec, 0, tmp->info);
 
 		}
-
-	}
-	if (Intersec->size == 0) {
-		tmp = list->head;
-		while (tmp != list->tail)
-		{
+		//identique a celui d haut dessu mais avec seulement 2 cluster
+		if (Intersec->size == 0) {
+			tmp = list->head;
+			while (tmp != list->tail)
+			{
+				if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 2) {
+					InsertElementAt(Intersec, 0, tmp->info);
+				}
+				tmp = tmp->next;
+			}
 			if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 2) {
 				InsertElementAt(Intersec, 0, tmp->info);
+
 			}
-			tmp = tmp->next;
-		}
-		if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 2) {
-			InsertElementAt(Intersec, 0, tmp->info);
 
 		}
-
-	}
-	if (Intersec->size == 0) {
-		tmp = list->head;
-		while (tmp != list->tail)
-		{
+		if (Intersec->size == 0) {
+			tmp = list->head;
+			while (tmp != list->tail)
+			{
+				if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 1) {
+					InsertElementAt(Intersec, 0, tmp->info);
+				}
+				tmp = tmp->next;
+			}
 			if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 1) {
 				InsertElementAt(Intersec, 0, tmp->info);
+
 			}
-			tmp = tmp->next;
-		}
-		if (nbrePresenceClusters(tmp, tampon, tampon1, tampon2, tampon3) == 1) {
-			InsertElementAt(Intersec, 0, tmp->info);
 
 		}
-
 	}
+	
 	return(Intersec);
 }
