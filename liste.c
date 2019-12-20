@@ -47,7 +47,7 @@ SingleLinkedListElem* GetElementAt(LinkedList* Liste, int i) {
 	if (i == 0) return(Liste->head);
 	if (i == Liste->size - 1) return(Liste->tail);
 	Element = Liste->head;
-	while (CurrentIndex != i && Element != NULL) {
+	while ((CurrentIndex != i) && (Element != NULL)) {
 		Element = Element->next;
 		CurrentIndex++;
 	}
@@ -627,16 +627,20 @@ Time Horloge_addition(Time a, Time b) {
 	return(resultat);
 }
 
-Time horloge_soustraction(Time a, int minutes) {
-	int delta = a.minute - minutes;
+Time horloge_soustraction(Time a, Time b) {
+	Time resultat;
+	resultat.heure = 0;
+	resultat.minute = 0;
+	int delta = a.minute - b.minute;
 	if (delta < 0) {
-		a.heure = a.heure - 1;
-		a.minute = 60 + delta;
+		resultat.heure = a.heure - b.heure-1;
+		resultat.minute = 60+resultat.minute + delta;
 	}
 	else {
-		a.minute = a.minute - minutes;
+		resultat.heure = a.heure - b.heure;
+		resultat.minute = a.minute - b.minute;
 	}
-	return(a);
+	return(resultat);
 }
 
 Time tempsparcours(SingleLinkedListElem* A, SingleLinkedListElem* B) {
@@ -684,8 +688,35 @@ Time CalculeTimeItin(LinkedList* copy) {
 			current = current->next;
 			currentnext = currentnext->next;
 		}
+		temps = Horloge_addition(temps, tempsparcours(current, currentnext));
 	}
 	return(temps);
+}
+
+Time CalculeTimeTotalItin(LinkedList* copy) {
+	Time temps;
+	Time temps1;
+	Time temps2;
+	Time tempsfinale;
+	temps.heure = 0;
+	temps.minute = 0;
+	if (copy != NULL) {
+		SingleLinkedListElem* current;
+		SingleLinkedListElem* currentnext;
+		current = copy->head;
+		currentnext = current->next;
+		temps1 = currentnext->info.priseencharge;
+		while (currentnext != copy->tail)
+		{
+			current = current->next;
+			currentnext = currentnext->next;
+		}
+		temps2= current->info.depot;
+		tempsfinale = horloge_soustraction(temps2, temps1);
+		temps = Horloge_addition(temps, tempsparcours(current, currentnext));
+		tempsfinale = Horloge_addition(tempsfinale, temps);
+	}
+	return(tempsfinale);
 }
 
 LinkedList* InitOtherElement(LinkedList* client) {

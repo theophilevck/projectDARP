@@ -137,7 +137,6 @@ LinkedList* clusterGeographique(LinkedList* listeclient, ElementListe client, fl
 			InsertElementAt(cluster, 1, CurrentElement->info);
 		}
 	}
-
 	return(cluster);
 }
 
@@ -223,7 +222,7 @@ LinkedList* IntersecClusters(LinkedList* list, SingleLinkedListElem* tmp) {
 	//cretaion des diferent cluster pour l element donnee
 	tampon = clusterCapaciter(list, tmp->info, tmp->info.capaciter, 4);
 
-	tampon1 = clusterGeographique(list, tmp->info, 5);
+	tampon1 = clusterGeographique(list, tmp->info, 3);
 
 	tampon2 = clusterHeureAriver(list, tmp->info);
 

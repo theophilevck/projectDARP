@@ -12,8 +12,7 @@
 
 
 #define TAILLE_MAX 1000 // Tableau de taille 1000
-FILE RouteDrawing(char NomDuFichierOuNomDuChemin[], LinkedList* MaRoute);
-
+FILE RouteDrawing(char NomDuFichierOuNomDuChemin[], LinkedList* MaRoute1, LinkedList* MaRoute2, LinkedList* MaRoute3, LinkedList* MaRoute4, LinkedList* copy);
 
 int main() {
 	srand(time(NULL)); // initialisation de rand
@@ -58,7 +57,7 @@ int main() {
 	printf("\n");
 	system("pause");
 	
-	for (int k = 0; k < 100; k++) {
+	for (int k = 0; k < 10; k++) {
 		tampon9 = 0;
 		copy = CopyList(liste);//creation de la copy que l on va utiliser
 		if (copy != NULL) {
@@ -67,24 +66,40 @@ int main() {
 			route2 = InitList(copy);
 			route3 = InitList(copy);
 			DeletCopy(copy, 0);
+
 			while ((tampon9 < 1000))
 			{
 				tampon = aleatoire(route->size, 0);//debut route
-
+				
 				tmpo = GetElementAt(route, tampon);
+				afficherListe(route);
+				while (tmpo==NULL)
+				{
+				
+					tampon = aleatoire(route->size, 0);
+					tmpo = GetElementAt(route, tampon);
+				}
 				rout = IntersecClusters(copy, tmpo);
+
 				i = InsertGoodSpot(copy, route, rout, tampon);
 				if (i == 0) {
 					tampon9 = tampon9 + 1;
 				}
 				//fin route
 
-				tampon = aleatoire(route1->size, 0);//debut route1
-				tampon4 = aleatoire(copy->size, 1);
-				tmpo = GetElementAt(copy, tampon4);
+				tampon = aleatoire(route1->size, 0);//debut route11
+
+				tmpo = GetElementAt(route1, tampon);
+				afficherListe(route1);
+				while (tmpo == NULL)
+				{
+			
+					tampon = aleatoire(route->size, 0);
+					tmpo = GetElementAt(route1, tampon);
+				}
 				rout = IntersecClusters(copy, tmpo);
-				afficherListe(copy);
-				i = InsertGoodSpot(copy, route1, rout, tampon);
+
+				i = InsertGoodSpot(copy, route, rout, tampon);
 				if (i == 0) {
 					tampon9 = tampon9 + 1;
 				}
@@ -92,8 +107,16 @@ int main() {
 
 				tampon = aleatoire(route2->size, 0);//debut route2
 
-				tmpo = GetElementAt(copy, tampon);
+				tmpo = GetElementAt(route2, tampon);
+				afficherListe(route2);
+				while (tmpo == NULL)
+				{
+			
+					tampon = aleatoire(route->size, 0);
+					tmpo = GetElementAt(route2, tampon);
+				}
 				rout = IntersecClusters(copy, tmpo);
+
 				i = InsertGoodSpot(copy, route2, rout, tampon);
 				if (i == 0) {
 					tampon9 = tampon9 + 1;
@@ -102,8 +125,15 @@ int main() {
 
 				tampon = aleatoire(route3->size, 0);//debut route3
 
-				tmpo = GetElementAt(copy, tampon);
+				tmpo = GetElementAt(route3, tampon);
+				afficherListe(route3);
+				while (tmpo == NULL)
+				{
+					tampon = aleatoire(route->size, 0);
+					tmpo = GetElementAt(route3, tampon);
+				}
 				rout = IntersecClusters(copy, tmpo);
+
 				i = InsertGoodSpot(copy, route3, rout, tampon);
 				if (i == 0) {
 					tampon9 = tampon9 + 1;
@@ -138,28 +168,18 @@ int main() {
 			j = j + CheckTime(route3);
 			//fin du teste
 
-			printf("\n");
-			afficherListHeure(route);
-			printf("\n");
-			afficherListHeure(route1);
-			printf("\n");
-			afficherListHeure(route2);
-			printf("\n");
-			afficherListHeure(route3);
-			printf("\n");
-
 			//test de verification de la solution et sauvegarde si elle est meilleure que la precedente
 			if (j == 4) {
 					if(save1!=NULL){
 						if ((route->size + route1->size + route2->size + route3->size) > (save1->size + save2->size + save3->size + save4->size)) {
-
-							save1 = route;
+							save1 = route;//si on dans la nouvelle solution on prend plus de client que dans celle sauvegarder on sauvegarde la nouvelle
 							save2 = route1;
 							save3 = route2;
 							save4 = route3;
 							save5 = copy;
 						}
 						if ((route->size + route1->size + route2->size + route3->size) == (save1->size + save2->size + save3->size + save4->size)) {
+							//choix de la fonction si on prefere le temps de la tourner reele ou si on veux le temps que ça va prendre de faire les chemin
 							time1 = CalculeTimeItin(route);
 							time2 = CalculeTimeItin(route1);
 							time3 = CalculeTimeItin(route2);
@@ -174,8 +194,25 @@ int main() {
 							timecompar2 = (Horloge_addition(time1, time2));
 							timecompar2 = (Horloge_addition(timecompar1, time3));
 							timecompar2 = (Horloge_addition(timecompar1, time4));
+
+							/*time1 = CalculeTimeTotalItin(route);
+							time2 = CalculeTimeTotalItin(route1);
+							time3 = CalculeTimeTotalItin(route2);
+							time4 = CalculeTimeTotalItin(route3);
+							timecompar1 = (Horloge_addition(time1, time2));
+							timecompar1 = (Horloge_addition(timecompar1, time3));
+							timecompar1 = (Horloge_addition(timecompar1, time4));
+							time1 = CalculeTimeTotalItin(save1);
+							time2 = CalculeTimeTotalItin(save2);
+							time3 = CalculeTimeTotalItin(save3);
+							time4 = CalculeTimeTotalItin(save4);
+							timecompar2 = (Horloge_addition(time1, time2));
+							timecompar2 = (Horloge_addition(timecompar1, time3));
+							timecompar2 = (Horloge_addition(timecompar1, time4));*/
+							
+							
 							if (est_sup(timecompar2, timecompar1)) {
-								save1 = route;
+								save1 = route;//si la nouvelle solutiion fait la meme taille que celle sauvegarder mais quelle est plus rapide on la sauvegarde
 								save2 = route1;
 								save3 = route2;
 								save4 = route3;
@@ -185,7 +222,7 @@ int main() {
 					}
 					else
 					{
-						save1 = route;
+						save1 = route;//si les sauvgarde sont vide on sauvegarde les routes que l on viens de cree
 						save2 = route1;
 						save3 = route2;
 						save4 = route3;
@@ -215,11 +252,9 @@ int main() {
 	//affichage des cleint qui non pas etes pris en charge
 	afficherListe(save5);
 
+	copy = CopyList(liste);
 	//afichage des solution sur graphiz
-	RouteDrawing("demo.dot", save1);
-	RouteDrawing("demo1.dot", save2);
-	RouteDrawing("demo2.dot", save3);
-	RouteDrawing("demo3.dot", save4);
+	RouteDrawing("demo.dot", save1, save2, save3, save4, copy);
 	
 	system("pause");
 	return (EXIT_SUCCESS);
@@ -228,9 +263,10 @@ int main() {
 
 
 //fonction graphiz
-FILE RouteDrawing(char NomDuFichierOuNomDuChemin[], LinkedList* MaRoute) {
+FILE RouteDrawing(char NomDuFichierOuNomDuChemin[], LinkedList* MaRoute1, LinkedList* MaRoute2, LinkedList* MaRoute3, LinkedList* MaRoute4, LinkedList* copy) {
+
 	//Ouverture du fichier texte en veillant � pouvoir �crire dedans
-	FILE* fichier = fopen(NomDuFichierOuNomDuChemin, "r+");
+	FILE* fichier = fopen(NomDuFichierOuNomDuChemin, "w");
 	//Verifions que le pointeur a bien pris le fichier
 	if (fichier != NULL)
 	{
@@ -244,16 +280,126 @@ FILE RouteDrawing(char NomDuFichierOuNomDuChemin[], LinkedList* MaRoute) {
 	//Nous regardons les �l�ments de la liste chain�es et commen�ons � dessiner notre sch�ma graphviz
 	SingleLinkedListElem* current;
 	SingleLinkedListElem* currentsuivant;
-	current = GetElementAt(MaRoute, 0);
-	currentsuivant = GetElementAt(MaRoute, 1);
-	fprintf(fichier, "digraph G{");
-	while (current != MaRoute->tail) {
+	current = copy->head;
+	currentsuivant = current->next;
+	fprintf(fichier, "digraph G{engine=\"neato\"\n");
+	while (current != copy->tail) {
+		if (current == copy->head) {
+			fprintf(fichier, "Depot [shape=box , pos=\"%.3f,%.3f!\"] \n", 0, 0);
+		}
+		else
+		{
+			if (current->info.isDeparture == true) {
+				fprintf(fichier, "%d.%d [pos=\"%.3f,%.3f!\"] \n", current->info.order.ID, current->info.isDeparture, current->info.order.depart.X, current->info.order.depart.Y);
 
-		fprintf(fichier, "%d->%d ;\n", current->info.order.ID, currentsuivant->info.order.ID);
+			}
+			else
+			{
+				fprintf(fichier, "%d.%d [pos=\"%.3f,%.3f!\"] \n", current->info.order.ID, current->info.isDeparture, current->info.order.arrivee.X, current->info.order.arrivee.Y);
+			}
+		}
 
 		current = currentsuivant;
 		currentsuivant = currentsuivant->next;
+
 	}
+
+	current = MaRoute1->head;
+	currentsuivant = current->next;
+
+	while (currentsuivant != MaRoute1->tail) {
+		if (current == MaRoute1->head) {
+			fprintf(fichier, "Depot->%d.%d [color=red,penwidth=3.0]  \n", currentsuivant->info.order.ID, currentsuivant->info.isDeparture);
+		}
+		else {
+			if (current->info.isDeparture == true) {
+				fprintf(fichier, "%d.%d->%d.%d [color=red,penwidth=3.0]  \n", current->info.order.ID, current->info.isDeparture, currentsuivant->info.order.ID, currentsuivant->info.isDeparture);
+			}
+			else
+			{
+				fprintf(fichier, "%d.%d->%d.%d [color=red,penwidth=3.0] \n", current->info.order.ID, current->info.isDeparture, currentsuivant->info.order.ID, currentsuivant->info.isDeparture);
+			}
+		}
+		current = currentsuivant;
+		currentsuivant = currentsuivant->next;
+	}
+	fprintf(fichier, "%d.%d->Depot [color=red,penwidth=3.0] \n", current->info.order.ID, current->info.isDeparture);
+
+	//route2
+
+	current = MaRoute2->head;
+	currentsuivant = current->next;
+
+	while (currentsuivant != MaRoute2->tail) {
+		if (current == MaRoute2->head) {
+			fprintf(fichier, "Depot->%d.%d [color=limegreen,penwidth=3.0]  \n",  currentsuivant->info.order.ID, currentsuivant->info.isDeparture);
+		}
+		else {
+			if (current->info.isDeparture == true) {
+				fprintf(fichier, "%d.%d->%d.%d [color=limegreen,penwidth=3.0]  \n", current->info.order.ID, current->info.isDeparture, currentsuivant->info.order.ID, currentsuivant->info.isDeparture);
+			}
+			else
+			{
+				fprintf(fichier, "%d.%d->%d.%d [color=limegreen,penwidth=3.0] \n", current->info.order.ID, current->info.isDeparture, currentsuivant->info.order.ID, currentsuivant->info.isDeparture);
+			}
+		}
+		current = currentsuivant;
+		currentsuivant = currentsuivant->next;
+
+
+	}
+	fprintf(fichier, "%d.%d->Depot [color=limegreen,penwidth=3.0] \n", current->info.order.ID, current->info.isDeparture);
+
+	//route3
+
+	current = MaRoute3->head;
+	currentsuivant = current->next;
+
+	while (currentsuivant != MaRoute3->tail) {
+		if (current == MaRoute3->head) {
+			fprintf(fichier, "Depot->%d.%d [color=blue,penwidth=3.0]  \n",  currentsuivant->info.order.ID, currentsuivant->info.isDeparture);
+		}
+		else {
+			if (current->info.isDeparture == true) {
+				fprintf(fichier, "%d.%d->%d.%d [color= blue,penwidth=3.0]  \n", current->info.order.ID, current->info.isDeparture, currentsuivant->info.order.ID, currentsuivant->info.isDeparture);
+			}
+			else
+			{
+				fprintf(fichier, "%d.%d->%d.%d [color= blue,penwidth=3.0] \n", current->info.order.ID, current->info.isDeparture, currentsuivant->info.order.ID, currentsuivant->info.isDeparture);
+			}
+		}
+		current = currentsuivant;
+		currentsuivant = currentsuivant->next;
+	}
+	fprintf(fichier, "%d.%d->Depot [color= blue,penwidth=3.0] \n", current->info.order.ID, current->info.isDeparture);
+
+	//route4
+
+	current = MaRoute4->head;
+	currentsuivant = current->next;
+
+	while (currentsuivant != MaRoute4->tail) {
+		if (current == MaRoute4->head) {
+			fprintf(fichier, "Depot->%d.%d [color=yellow,penwidth=3.0]  \n", currentsuivant->info.order.ID, currentsuivant->info.isDeparture);
+		}
+		else{
+			if (current->info.isDeparture == true) {
+				fprintf(fichier, "%d.%d->%d.%d [color=yellow,penwidth=3.0]  \n", current->info.order.ID, current->info.isDeparture, currentsuivant->info.order.ID, currentsuivant->info.isDeparture);
+			}
+			else
+			{
+				fprintf(fichier, "%d.%d->%d.%d [color=yellow,penwidth=3.0] \n", current->info.order.ID, current->info.isDeparture, currentsuivant->info.order.ID, currentsuivant->info.isDeparture);
+			}
+	}
+	current = currentsuivant;
+	currentsuivant = currentsuivant->next;
+	}
+	fprintf(fichier, "%d.%d->Depot [color=yellow,penwidth=3.0] \n", current->info.order.ID, current->info.isDeparture);
+	
 	fprintf(fichier, "}");
 }
+	
+
+	
+
 

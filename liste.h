@@ -90,12 +90,16 @@ float distance(Pos p1, Pos p2);
 Time Horloge_addition(Time a, Time b);
 
 //fonction qui permet de faire la sustraction de variable de temps
-Time horloge_soustraction(Time a, int minutes);
+Time horloge_soustraction(Time a, Time b);
 
 //calcule 
 Time tempsparcours(SingleLinkedListElem* A, SingleLinkedListElem* B);
 
+//fonction qui calcule le temps de parcour totale de la route
 Time CalculeTimeItin(LinkedList* copy);
+
+//fonction qui calcule le temps efectif qu il faut pour realiser la route
+Time CalculeTimeTotalItin(LinkedList* copy);
 
 //fonction qui teste si on peux insere les deux element qui constitue un client
 int CheckinsertionFirstElement2(LinkedList* route, SingleLinkedListElem* cournat, SingleLinkedListElem* insertion);
